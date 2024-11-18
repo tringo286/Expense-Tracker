@@ -1,6 +1,23 @@
 const { model } = require('mongoose');
 const User = require('../models/user.model');
 
+const errorsHandler = (error) => {
+    const errors = { email: "", password: ""};
+
+    if(error.code === 11000) {
+        errors.email = "Email is already registerd"
+        return errors;
+    }
+
+    if(error.message.includes('user validation failed')) {
+        Object.values(error.errors).forEach(value => {
+            errors[value.properties.path] = value.properties.message;
+        });
+    }
+
+    return errors;
+};
+
 const getSignup = async (req, res) => {
     res.send('User sign up');
 };
@@ -16,7 +33,8 @@ const postSignup = async (req, res) => {
         const newUser = await User.create(user);
         res.status(201).json({ success: true, user: newUser });
     } catch (error) {
-        res.status(400).json({ success: false, message: error.message});
+        const errors = errorsHandler(error);
+        res.status(400).json({ success: false, message: errors});
     }
 }
 
