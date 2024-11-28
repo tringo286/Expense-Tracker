@@ -22,7 +22,7 @@ const handleErrors = (error) => {
 // create json web token 
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
-    return jwt.sign(id, "my secret key", { expiresIn: maxAge})
+    return jwt.sign({ id }, "my secret key", { expiresIn: maxAge})
 }
 
 const getSignup = async (req, res) => {
