@@ -1,21 +1,27 @@
-import { useState } from "react";
 import Signup from "./components/Signup";
-import Login from "./components/Login";
+import Login from "./components/Login";''
+import { 
+  Route, 
+  createBrowserRouter, 
+  createRoutesFromElements, 
+  RouterProvider 
+} from 'react-router-dom';
+import HomePage from './components/HomePage'
 
 const App = () => {
-  const [currentForm, setCurrentForm] = useState('login');
-
-  const toggleForm = (form) => {
-    setCurrentForm(form);
-  };
+    const router = createBrowserRouter(
+    createRoutesFromElements(
+      <>
+        <Route index element={<HomePage />} />
+        <Route path='/signup' element={<Signup />} />
+        <Route path='/login' element={<Login />} />
+      </>            
+    )
+  )
 
   return (
     <>
-      {currentForm === 'login' ? (
-        <Login onSwitch={toggleForm} />
-      ) : (
-        <Signup onSwitch={toggleForm} />
-      )}        
+      <RouterProvider router={router}/>
     </>
   );
 }
