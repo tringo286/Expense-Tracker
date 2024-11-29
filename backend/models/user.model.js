@@ -13,13 +13,13 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: [true, "Please enter a password"],
-        minlength: [6, "Password must be at least 6 characters"],
+        minlength: [3, "Password must be at least 3 characters"],
     }
 });
 
 userSchema.pre('save', async function(next) {
     const salt = await bcrypt.genSalt();
-    this.password = bcrypt.hash(this.password, salt);
+    this.password = await bcrypt.hash(this.password, salt);
     next();
 });
 

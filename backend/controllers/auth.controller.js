@@ -1,5 +1,5 @@
 const { model } = require('mongoose');
-const User = require('../models/user.model');
+const User = require('../models/user.model')
 const jwt = require('jsonwebtoken');
 
 const handleErrors = (error) => {
