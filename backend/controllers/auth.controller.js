@@ -3,20 +3,19 @@ const User = require('../models/user.model')
 const jwt = require('jsonwebtoken');
 
 const handleErrors = (error) => {
-    const errors = { email: "", password: ""};
-
-    if(error.code === 11000) {
-        errors.email = "Email is already registerd"
-        return errors;
-    }
-
-    if(error.message === 'incorrect password') {
-        errors.password = "Password is incorrect";
-    }
+    const errors = { email: "", password: ""};    
 
     if(error.code === 11000) {
         errors.email = 'Email is already registerd';
         return errors;
+    }
+
+    if(error.message === 'incorrect email') {
+        errors.email = "Email is not registerd";
+    }
+
+    if(error.message === 'incorrect password') {
+        errors.password = "Password is incorrect";
     }
 
     if(error.message.includes('user validation failed')) {
