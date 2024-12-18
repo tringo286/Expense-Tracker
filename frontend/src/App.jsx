@@ -1,27 +1,22 @@
 import Signup from "./components/Signup";
 import Login from "./components/Login";''
-import { 
-  Route, 
-  createBrowserRouter, 
-  createRoutesFromElements, 
-  RouterProvider 
-} from 'react-router-dom';
-import HomePage from './components/HomePage'
-
+import { Routes, Route } from 'react-router-dom';
+import RequireAuth from './components/RequireAuth';
+import Home from './components/Home'
 const App = () => {
-    const router = createBrowserRouter(
-    createRoutesFromElements(
-      <>
-        <Route index element={<HomePage />} />
-        <Route path='/signup' element={<Signup />} />
-        <Route path='/login' element={<Login />} />
-      </>            
-    )
-  )
+    
 
   return (
     <>
-      <RouterProvider router={router}/>
+      <Routes>
+        <Route path='/signup' element={<Signup />} />
+        <Route path='/login' element={<Login />} />
+
+        <Route element={<RequireAuth />}>
+          <Route path="/" element={<Home />} />  
+        </Route>
+        
+      </Routes>
     </>
   );
 }

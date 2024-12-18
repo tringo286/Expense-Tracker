@@ -1,13 +1,18 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useAuth from '../hooks/useAuth';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const { setAuth } = useAuth();
 
   const navigate = useNavigate();
+
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
+
+  const [password, setPassword] = useState(''); 
+  const [passwordError, setPasswordError] = useState('');
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -26,9 +31,10 @@ const Login = () => {
         setPasswordError(data.errors.password);
       }          
       
-      if(data.user) {
+      if(data.user) {        
+        setAuth({ user: data.user });
         return navigate('/');
-      }      
+      }         
     
     } catch (error) {     
       console.error(error);      
