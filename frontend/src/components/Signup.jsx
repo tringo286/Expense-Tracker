@@ -27,7 +27,7 @@ const Signup = () => {
       }          
       
       if(data.user) {
-        return navigate('/dashboard');
+        return navigate('/login');
       }      
      
     } catch (error) {     
