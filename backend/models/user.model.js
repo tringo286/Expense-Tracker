@@ -14,18 +14,13 @@ const userSchema = mongoose.Schema({
         type: String,
         required: [true, "Please enter a password"],
         minlength: [3, "Password must be at least 3 characters"],
-    }
-});
-
-userSchema.pre('save', async function(next) {
-    const salt = await bcrypt.genSalt();
-    this.password = await bcrypt.hash(this.password, salt);
-    next();
+    },
+    refreshToken: { type: String },
 });
 
 userSchema.statics.login = async function(email, password) {
     const user = await this.findOne({ email });
-    if (user) {
+    if (user) {         
         const auth = await bcrypt.compare(password, user.password);   
         if(auth) {
             return user;
