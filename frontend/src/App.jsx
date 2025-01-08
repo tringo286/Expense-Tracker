@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import RequireAuth from './components/RequireAuth';
 import Home from './components/Home'
 import LinkPage from "./components/LinkPage";
-
+import Missing  from "./components/Missing";
 const App = () => {
     
 
@@ -16,9 +16,10 @@ const App = () => {
         <Route path='/linkpage' element={<LinkPage />} />
 
         <Route element={<RequireAuth />}>
-          <Route path="/" element={<Home />} />  
+          <Route path="/" element={<Home />} />           
         </Route>
         
+        <Route path="*" element={<Missing />} />
       </Routes>
     </>
   );
