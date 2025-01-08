@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from '../api/axios';
 
 const Signup = () => {  
   const [email, setEmail] = useState('');
@@ -12,14 +13,17 @@ const Signup = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
   
-    try {
-      const res = await fetch('/api/signup', {
-        method: "POST",
-        body: JSON.stringify({ email, password }),
-        headers: { "Content-Type": "application/json" },
-      });      
+    try {               
+      const res = await axios.post('/signup', {
+          email,
+          password
+        }, {
+          headers: {
+            "Content-Type": "application/json"
+          }
+      }); 
        
-      const data = await res.json();    
+      const data = res.data;   
       
       if(data.errors) {
         setEmailError(data.errors.email);

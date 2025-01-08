@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from '../hooks/useAuth';
+import axios from '../api/axios';
 
 const Login = () => {
   const { setAuth } = useAuth();
@@ -18,13 +19,16 @@ const Login = () => {
     event.preventDefault();
   
     try {
-      const res = await fetch('/api/login', {
-        method: "POST",
-        body: JSON.stringify({ email, password }),
-        headers: { "Content-Type": "application/json" },
+      const res = await axios.post('/login', {
+        email,
+        password
+      }, {
+        headers: {
+          "Content-Type": "application/json"
+        }
       });      
       
-      const data = await res.json();    
+      const data = res.data;      
       
       if(data.errors) {
         setEmailError(data.errors.email);
