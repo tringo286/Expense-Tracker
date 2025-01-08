@@ -33,7 +33,7 @@ const Login = () => {
       
       if(data.user) {        
         setAuth({ user: data.user });
-        return navigate('/linkpage');
+        return navigate('/');
       }         
     
     } catch (error) {     

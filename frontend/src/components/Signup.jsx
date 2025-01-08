@@ -27,7 +27,7 @@ const Signup = () => {
       }          
       
       if(data.user) {
-        return navigate('/login');
+        return navigate('/');
       }      
      
     } catch (error) {     
