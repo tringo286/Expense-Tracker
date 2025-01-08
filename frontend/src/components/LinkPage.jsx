@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import useRefreshToken from '../hooks/useRefreshToken';
 
 const LinkPage = () => {
+    const refresh = useRefreshToken();
   return (
     <section className="flex flex-col items-center justify-center text-center p-8 space-y-6">
     <h1 className="text-4xl font-bold">Links</h1>
@@ -21,6 +23,7 @@ const LinkPage = () => {
             <Link to="/admin" className="text-blue-500 hover:underline cursor-pointer text-xl block">Admin Page</Link>
         </div>
     </div>
+    <button onClick={() => refresh()}>Refresh</button>
 </section>
 
   )

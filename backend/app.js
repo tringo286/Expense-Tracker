@@ -1,7 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
-
+const cors = require('cors');
 const { connectDB } = require("./db")
 const expense = require('./routes/expense.route')
 const user = require('./routes/user.route')
@@ -14,6 +14,11 @@ app.use(cookieParser());
 dotenv.config({ path: '../.env' });
 
 const PORT = process.env.PORT || 3000;;
+
+app.use(cors({
+  origin: 'http://localhost:3000', // Frontend URL
+  credentials: true,  // Allow sending cookies
+}));
 
 app.use('/api/expense', expense);
 app.use('/', user);

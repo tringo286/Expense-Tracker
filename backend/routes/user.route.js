@@ -8,6 +8,6 @@ router.get('/signup', getSignup);
 router.post('/signup', postSignup);
 router.get('/login', getLogin);
 router.post('/login', postLogin);
-router.get('/refesh', handleRefreshToken);
+router.get('/refresh', handleRefreshToken);
 
 module.exports = router;

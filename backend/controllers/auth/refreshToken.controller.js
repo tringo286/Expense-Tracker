@@ -12,7 +12,7 @@ const handleRefreshToken = async (req, res) => {
     // Evaluate jwt 
     jwt.verify(refreshToken, "my secret key", (err, decoded) => {
             if (err || foundUser.email !== decoded.email) return res.sendStatus(403);   
-            const email = Object.values(foundUser.email);         
+            const email = foundUser.email;         
             const accessToken = jwt.sign({ email }, "my secret key", { expiresIn: '10s' });
             res.json({ email, accessToken })
         }
