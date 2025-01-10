@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import useAuth from '../hooks/useAuth';
 import axios from '../api/axios';
 
@@ -7,6 +7,8 @@ const Login = () => {
   const { setAuth } = useAuth();
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -38,7 +40,7 @@ const Login = () => {
       
       if(data.user) {        
         setAuth({ user: data.user });
-        return navigate('/');
+        return navigate(from, { replace: true });
       }         
     
     } catch (error) {     
@@ -88,7 +90,7 @@ const Login = () => {
         </div>
         <button type="submit" className="w-full bg-blue-500 rounded-md py-2 text-white font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4">Log In</button>
         <p className="text-center">Don't have an account?        
-          <a href="/signup" className="text-blue-500 hover:text-blue-700 ml-2">Sign Up</a>
+          <Link to="/signup" className="text-blue-500 hover:text-blue-700 ml-2">Sign Up</Link>
         </p>
       </form>
     </div>
