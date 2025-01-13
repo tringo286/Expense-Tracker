@@ -57,7 +57,7 @@ const postLogin = async (req, res) => {
         const user = await User.login(email, password);
         
         // Access token for short time to authenticate user for API access
-        const accessToken = jwt.sign({ email }, "my secret key", { expiresIn: '1h' });
+        const accessToken = jwt.sign({ email }, "my secret key", { expiresIn: '10s' });
 
         // Refresh token for long time to obtain a new access token 
         const refreshToken = jwt.sign({ email }, "my secret key", { expiresIn: '1d' });
