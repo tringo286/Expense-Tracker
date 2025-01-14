@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import useAuth from '../hooks/useAuth';
 import axios from '../api/axios';
@@ -16,6 +16,10 @@ const Login = () => {
   const [password, setPassword] = useState(''); 
   const [passwordError, setPasswordError] = useState('');
   
+  useEffect(() => {
+    setEmailError('');
+    setPasswordError('');
+  }, [email, password])
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -31,7 +35,7 @@ const Login = () => {
         withCredentials: true 
       });      
       
-      const data = res.data;                   
+      const data = res.data;          
       
       if(data.user) {        
         setAuth({ user: data.user });
