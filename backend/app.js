@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const { connectDB } = require("./db")
 const expense = require('./routes/expense.route')
-const user = require('./routes/user.route')
+const user = require('./routes/userRoutes')
 
 const app = express();
 

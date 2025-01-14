@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const Expense = require('../models/expense.model')
+const Expense = require('../models/expenseModel')
 
 const getExpense = async (req, res) => {
     try {

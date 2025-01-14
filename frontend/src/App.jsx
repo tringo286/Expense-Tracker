@@ -1,14 +1,26 @@
+import { Routes, Route } from 'react-router-dom';
+
+import RequireAuth from './components/RequireAuth';
+import PersistLogin from "./components/PersistLogin"; 
+
+import Header from './components/Header';
 import Signup from "./components/Signup";
 import Login from "./components/Login";''
-import { Routes, Route } from 'react-router-dom';
-import RequireAuth from './components/RequireAuth';
 import Home from './components/Home'
 import Missing  from "./components/Missing";
 import Admin from './components/Admin'
-import PersistLogin from "./components/PersistLogin"; 
+import Footer from './components/Footer';
+
 
 const App = () => {
     
+  const Layout = ({ children }) => (
+    <>
+      <Header />
+      {children}
+      <Footer />
+    </>
+  );
 
   return (
     <>
@@ -17,9 +29,9 @@ const App = () => {
         <Route path='/login' element={<Login />} /> 
 
         <Route element={<PersistLogin />}>
-          <Route element={<RequireAuth />}>
-              <Route path="/" element={<Home />} />    
-              <Route path="/admin" element={<Admin />} />         
+          <Route element={<RequireAuth />}>                           
+              <Route path="/" element={<Layout><Home /></Layout>} />    
+              <Route path="/admin" element={<Layout><Admin /></Layout>} />         
           </Route>
         </Route>
         
