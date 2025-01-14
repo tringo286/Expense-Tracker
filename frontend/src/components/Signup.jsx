@@ -13,31 +13,33 @@ const Signup = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
   
-    try {               
+    try {
       const res = await axios.post('/signup', {
-          email,
-          password
-        }, {
-          headers: {
-            "Content-Type": "application/json"
-          }
-      }); 
-       
-      const data = res.data;   
-      
-      if(data.errors) {
-        setEmailError(data.errors.email);
-        setPasswordError(data.errors.password);
-      }          
-      
-      if(data.user) {
-        return navigate('/');
-      }      
-     
-    } catch (error) {     
-      console.error(error);      
+        email,
+        password
+      }, {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+  
+      const data = res.data;        
+  
+      if (data.user) {
+        return navigate('/login');
+      }
+  
+    } catch (error) {
+      console.error("An error occurred during signup:");
+  
+      if (error.response) {
+        console.log("Error response data:", error.response.data);         
+        setEmailError(error.response.data.errors.email);
+        setPasswordError(error.response.data.errors.password);
+      }       
     }
   };
+
 
   return (
    <div className="bg-gray-100 w-screen h-screen flex justify-center items-center">

@@ -31,20 +31,21 @@ const Login = () => {
         withCredentials: true 
       });      
       
-      const data = res.data;      
-      
-      if(data.errors) {
-        setEmailError(data.errors.email);
-        setPasswordError(data.errors.password);
-      }          
+      const data = res.data;                   
       
       if(data.user) {        
         setAuth({ user: data.user });
         return navigate(from, { replace: true });
       }         
     
-    } catch (error) {     
-      console.error(error);      
+    } catch (error) {
+      console.error("An error occurred during login:");
+  
+      if (error.response) {
+        console.log("Error response data:", error.response.data);         
+        setEmailError(error.response.data.errors.email);
+        setPasswordError(error.response.data.errors.password);
+      }       
     }
   };
 

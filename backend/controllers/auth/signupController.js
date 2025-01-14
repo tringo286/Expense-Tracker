@@ -35,8 +35,8 @@ const handleSignup = async (req,res) => {
     }  
 
     // Check for duplicate email in the db
-    const duplicatedEmail = await User.findOne({ email });
-    if (duplicatedEmail) {
+    const duplicateEmail = await User.findOne({ email });
+    if (duplicateEmail) {
         return res.status(409).json({ // Coflict
             success: false,
             errors: {
