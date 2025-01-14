@@ -1,8 +1,51 @@
 const User = require('../../models/user.model')
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const handleLogin = async (req, res) => {
     const { email, password } = req.body;
+
+    if (!email) {
+        return res.status(400).json({
+            success: false,
+            errors: {
+                email: "Please enter an email",
+                password: ""
+            }
+        });
+    }     
+
+    if (!password) {
+        return res.status(400).json({
+            success: false,
+            errors: {
+                email: "",
+                password: "Please enter a password"
+            }
+        });
+    }   
+
+    const foundUser = await User.findOne({ email });
+    if (!foundUser) {
+        return res.status(401).json({
+            success: false,
+            errors: {
+                email: "Email is not registered",
+                password: ""
+            }
+        });
+    }   
+
+    const matchPassword = await bcrypt.compare(password, foundUser.password);
+    if (!matchPassword) {
+        return res.status(401).json({
+            success: false,
+            errors: {
+                email: "",
+                password: "Incorrect password"
+            }
+        });
+    }   
 
     try {
         const user = await User.login(email, password);
@@ -20,9 +63,8 @@ const handleLogin = async (req, res) => {
         // Create secure cookie with refresh token
         res.cookie('jwt', refreshToken, { httpOnly: true, secure: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 });
         res.status(200).json({ success: true, user: email, accessToken });
-    } catch (err) {
-        const errors = handleErrors(err);         
-        res.status(400).json({ success: false, errors: errors});
+    } catch (error) {              
+        res.status(400).json({ success: false, errors: error});
     }
 };
 
