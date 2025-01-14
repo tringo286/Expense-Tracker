@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const expenseSchema = new mongoose.Schema({    
+const incomeSchema = new mongoose.Schema({    
     date: {
         type: Date,
         default: Date.now,
@@ -20,5 +20,5 @@ const expenseSchema = new mongoose.Schema({
     }
 });
 
-const Expense = new mongoose.model('Expense', expenseSchema); // Mongoose uses the plural, lowercased version of the model which is 'expenses'
-module.exports = Expense;
+const Income = new mongoose.model('Income', incomeSchema); //Mongoose uses the plural, lowercased version of the mode which is 'incomes' 
+module.exports = Income;

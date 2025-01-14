@@ -3,7 +3,8 @@ const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const { connectDB } = require("./db")
-const expense = require('./routes/expenseRoutes')
+const expenses = require('./routes/expenseRoutes')
+const incomes = require('./routes/incomeRoutes')
 const user = require('./routes/userRoutes')
 
 const app = express();
@@ -20,8 +21,9 @@ app.use(cors({
   credentials: true,  // Allow sending cookies
 }));
 
-app.use('/', expense);
 app.use('/', user);
+app.use('/', expenses);
+app.use('/', incomes);
 
 app.listen(PORT, () => {
     connectDB();
