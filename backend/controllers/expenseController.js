@@ -4,7 +4,7 @@ const Expense = require('../models/expenseModel')
 const getExpense = async (req, res) => {
     try {
         const expense = await Expense.find({});
-        res.status(200).json({ success: true, data: expense})
+        res.status(200).json({ success: true, data: expense })
     } catch (error) {
         console.log("Error in fetching expenses: ", error.message);
         res.status(500).json({ success: false, message: "Server Error"})

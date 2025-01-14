@@ -15,11 +15,13 @@ import Footer from './components/Footer';
 const App = () => {
     
   const Layout = ({ children }) => (
-    <>
+    <div className='flex flex-col min-h-screen'>
       <Header />
-      {children}
+      <main className='flex-grow  '>
+        {children}
+      </main>
       <Footer />
-    </>
+    </div>
   );
 
   return (
