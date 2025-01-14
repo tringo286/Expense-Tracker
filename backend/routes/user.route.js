@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
-const { getSignup, postSignup, getLogin, postLogin, handleLogout, checkCookiesAfterLogout } = require('../controllers/auth/authController');
+const { handleSignup } = require('../controllers/auth/signupController')
+const { handleLogin } = require('../controllers/auth/loginController')
+const { handleLogout } = require('../controllers/auth/logoutController')
+
 const { handleRefreshToken } = require('../controllers/auth/refreshTokenController')
 
-router.get('/signup', getSignup);
-router.post('/signup', postSignup);
-router.get('/login', getLogin);
-router.post('/login', postLogin);
+router.post('/signup', handleSignup);
+router.post('/login', handleLogin);
 router.get('/refresh', handleRefreshToken);
 router.get('/logout', handleLogout);
 
