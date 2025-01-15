@@ -58,13 +58,16 @@ const DataProvider = ({ children }) => {
         setTotalIncomes(total);
     };
 
-    const getAllTransactions  = () => {        
+    const getAllTransactions = () => {
         const combinedTransactions = [
             ...expenses.map(transaction => ({ ...transaction, type: 'expense' })),
             ...incomes.map(transaction => ({ ...transaction, type: 'income' }))
-        ];                
-        setTransactions(combinedTransactions);        
-    };
+        ];   
+                
+        const sortedTransactions = combinedTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+    
+        setTransactions(sortedTransactions);
+    };    
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -102,7 +105,8 @@ const DataProvider = ({ children }) => {
         <DataContext.Provider value={{
             totalExpenses, totalIncomes, totalBalance,
             transactions,
-            category, setCategory, description, setDescription, date, setDate, amount, setAmount, handleSubmit, addIncome, deleteIncome, incomes
+            category, setCategory, description, setDescription, date, setDate, amount, setAmount, handleSubmit, addIncome, deleteIncome, 
+            incomes, expenses
         }}>
             {children}
         </DataContext.Provider>

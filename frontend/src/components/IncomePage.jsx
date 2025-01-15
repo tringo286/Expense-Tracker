@@ -1,6 +1,6 @@
 import useDataProvider from '../hooks/useDataProvider';
 
-const IncomesPage = () => {
+const IncomePage = () => {
     const { totalIncomes, category, setCategory, description, setDescription, date, setDate, amount, setAmount, handleSubmit, addIncome, deleteIncome, incomes } = useDataProvider();
     
     return (
@@ -84,4 +84,4 @@ const IncomesPage = () => {
     )
     }
 
-export default IncomesPage
+export default IncomePage

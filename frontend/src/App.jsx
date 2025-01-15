@@ -14,15 +14,15 @@ import Missing  from "./components/Missing";
 import Admin from './components/Admin'
 import Footer from './components/Footer';
 import TransactionsPage from './components/TransactionsPage';
-import AddIncomePage from './components/AddIncomePage';
+import IncomePage from './components/IncomePage';
 
 const App = () => {
     
   const Layout = ({ children }) => (
-    <div className='flex flex-col min-h-screen'>
+    <div className='h-screen flex flex-col'>
       <DataProvider>
         <Header />
-        <main className='flex-grow  '>
+        <main className='flex-grow'>
           {children}
         </main>
         <ToastContainer />
@@ -42,7 +42,7 @@ const App = () => {
               <Route path="/" element={<Layout><Home /></Layout>} />    
               <Route path="/admin" element={<Layout><Admin /></Layout>} />       
               <Route path="/transactions" element={<Layout><TransactionsPage /></Layout>} />   
-              <Route path="/incomes" element={<Layout><AddIncomePage /></Layout>} /> 
+              <Route path="/incomes" element={<Layout><IncomePage /></Layout>} /> 
           </Route>
         </Route>
         
