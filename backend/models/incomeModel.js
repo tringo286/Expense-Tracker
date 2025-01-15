@@ -2,8 +2,7 @@ const mongoose = require('mongoose');
 
 const incomeSchema = new mongoose.Schema({    
     date: {
-        type: Date,
-        default: Date.now,
+        type: Date,        
         required: true,    
     },
     category: {

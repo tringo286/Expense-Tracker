@@ -1,45 +1,7 @@
-import axios from '../api/axios';
-import { useEffect, useState } from "react";
+import useDataProvider from "../hooks/useDataProvider";
 
-const Home = () => {     
-    const [totalExpenses, setTotalExpenses] = useState('');
-    const [expenses, setExpenses] = useState([]);
-
-    const [totalIncomes, setTotalIncomes] = useState('');
-    const [incomes, setIncomes] = useState([]);   
-
-    useEffect(() => {
-        const fetchExpenses = async () => {
-            try {
-                const response = await axios.get('/expenses');
-                const fetchedExpenses = response.data.data;
-                setExpenses(fetchedExpenses); 
-                
-                const total = fetchedExpenses.reduce((total, expense) => total + expense.amount, 0);
-                setTotalExpenses(total);                  
-            } catch (error) {
-                console.error("An error occurred while getting total expenses:", error.message);
-            }
-        };
-        fetchExpenses();
-        
-        const fetchIncome = async () => {
-            try {
-                const response = await axios.get('/incomes');
-                const fetchedIncomes= response.data.data;
-                setIncomes(fetchedIncomes); 
-                
-                const total = fetchedIncomes.reduce((total, income) => total + income.amount, 0);
-                setTotalIncomes(total);                  
-            } catch (error) {
-                console.error("An error occurred while getting total expenses:", error.message);
-            }
-        };
-            
-        fetchIncome();
-    }, []);     
-
-    const totalBalance = totalIncomes - totalExpenses;
+const Home = () => {
+    const { totalExpenses, totalIncomes, totalBalance } = useDataProvider();
 
     return (
         <section className="grid grid-cols-5">

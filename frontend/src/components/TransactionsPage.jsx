@@ -1,43 +1,8 @@
-import axios from '../api/axios';
-import { useEffect, useState } from "react";
+import useDataProvider from '../hooks/useDataProvider';
 
-const TransactionsPage = () => {
-    const [totalExpenses, setTotalExpenses] = useState('');
-    const [expenses, setExpenses] = useState([]);
-
-    const [totalIncomes, setTotalIncomes] = useState('');
-    const [incomes, setIncomes] = useState([]); 
-
-    const [transactions, setTransactions] = useState([]);
-
-    useEffect(() => {
-            const fetchTransactions  = async () => {
-                try {
-                    // Fetch expenses
-                    const expensesResponse = await axios.get('/expenses');
-                    const fetchedExpenses = expensesResponse.data.data;
-
-                    // Fetch incomes
-                    const incomesResponse = await axios.get('/incomes');
-                    const fetchedIncomes = incomesResponse.data.data; 
-                    
-                    // Combine expenses and incomes
-                    const combinedTransactions = [
-                        ...fetchedExpenses.map(transaction => ({ ...transaction, type: 'expense' })),
-                        ...fetchedIncomes.map(transaction => ({ ...transaction, type: 'income' }))
-                    ];
-
-                    // Set combined transactions to state
-                    setTransactions(combinedTransactions);
-                                     
-                } catch (error) {
-                    console.error("An error occurred while fetching transactions:", error.message);
-                }
-            };        
-
-            fetchTransactions();      
-        }, []); 
-
+const TransactionsPage = () => {   
+    const { transactions } = useDataProvider();
+    
     return (
         <div>
             {transactions.map(transaction => (

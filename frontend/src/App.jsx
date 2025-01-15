@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import RequireAuth from './components/RequireAuth';
 import PersistLogin from "./components/PersistLogin"; 
+import { DataProvider } from './context/DataProvider';
 
 import Header from './components/Header';
 import Signup from "./components/Signup";
@@ -19,12 +20,14 @@ const App = () => {
     
   const Layout = ({ children }) => (
     <div className='flex flex-col min-h-screen'>
-      <Header />
-      <main className='flex-grow  '>
-        {children}
-      </main>
-      <ToastContainer />
-      <Footer />
+      <DataProvider>
+        <Header />
+        <main className='flex-grow  '>
+          {children}
+        </main>
+        <ToastContainer />
+        <Footer />
+      </DataProvider>
     </div>
   );
 
