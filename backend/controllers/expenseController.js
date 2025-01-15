@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Expense = require('../models/expenseModel')
 
-const getExpense = async (req, res) => {
+const getAllExpenses = async (req, res) => {
     try {
         const expense = await Expense.find({});
         res.status(200).json({ success: true, data: expense })
@@ -65,4 +65,4 @@ const deleteExpense = async (req, res) => {
     }
 }
 
-module.exports = { getExpense, createExpense, updateExpense, deleteExpense };
+module.exports = { getAllExpenses, createExpense, updateExpense, deleteExpense };

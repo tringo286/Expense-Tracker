@@ -1,4 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import RequireAuth from './components/RequireAuth';
 import PersistLogin from "./components/PersistLogin"; 
@@ -10,7 +12,8 @@ import Home from './components/Home'
 import Missing  from "./components/Missing";
 import Admin from './components/Admin'
 import Footer from './components/Footer';
-
+import TransactionsPage from './components/TransactionsPage';
+import AddIncomePage from './components/AddIncomePage';
 
 const App = () => {
     
@@ -20,6 +23,7 @@ const App = () => {
       <main className='flex-grow  '>
         {children}
       </main>
+      <ToastContainer />
       <Footer />
     </div>
   );
@@ -33,7 +37,9 @@ const App = () => {
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth />}>                           
               <Route path="/" element={<Layout><Home /></Layout>} />    
-              <Route path="/admin" element={<Layout><Admin /></Layout>} />         
+              <Route path="/admin" element={<Layout><Admin /></Layout>} />       
+              <Route path="/transactions" element={<Layout><TransactionsPage /></Layout>} />   
+              <Route path="/incomes" element={<Layout><AddIncomePage /></Layout>} /> 
           </Route>
         </Route>
         

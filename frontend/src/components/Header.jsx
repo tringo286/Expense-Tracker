@@ -1,4 +1,4 @@
-import { useNavigate} from 'react-router-dom'
+import { Link, useNavigate} from 'react-router-dom'
 import useLogout from '../hooks/useLogout'
 import useAuth from '../hooks/useAuth'
 
@@ -21,8 +21,16 @@ const Header = () => {
 
   return (
     <header className="flex justify-around items-center">
-      <h1>ExpenseTracker</h1>
+      <h1><Link to='/'>ExpenseTracker</Link></h1>
       <div>Welcome, <span className='text-blue-500'>{user}</span> !</div>
+      
+      <div className="space-y-4"> 
+        <Link to="/transactions" className="text-blue-500 hover:underline cursor-pointer text-xl block">View Transactions</Link>         
+      </div>
+      <div className="space-y-4"> 
+        <Link to="/incomes" className="text-blue-500 hover:underline cursor-pointer text-xl block">Incomes</Link>         
+      </div>
+
       <div className='p-3 bg-blue-500 rounded-lg text-white'>
           <button onClick={signOut}>Log Out</button>
       </div> 
