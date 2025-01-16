@@ -11,74 +11,72 @@ const Home = () => {
     const minExpense = Math.min(...expenses.map(transaction => transaction.amount));
     
     return (
-        <section className="grid grid-rows-[40px,1fr, 50px] bg-gray-100 h-full">
-            <h1 className="text-3xl text-indigo-500 font-bold ml-3">All Transactions</h1>             
-            <div className="grid grid-cols-[1fr,450px]">
-                <div className="grid grid-cols-2 grid-rows-[300px, 50px]">
-                    <div className="col-span-2 border-none bg-white rounded-xl m-3"><Chart /></div>
-
-                    <div className="flex flex-col justify-center items-center border-none bg-white rounded-2xl m-3">
-                        <h3 >Total Incomes</h3>
-                        <div className="text-2xl text-lime-500">${totalIncomes ? totalIncomes.toLocaleString() : 0}</div>
-                    </div>
-
-                    <div className="flex flex-col justify-center items-center border-none bg-white rounded-2xl m-3">
-                        <h3>Total Expenses</h3>   
-                        <div className="text-2xl text-red-500">${totalExpenses ? totalExpenses.toLocaleString() : 0}</div>
-                    </div>                    
-                </div> 
-
-                
-                <div className="flex flex-col justify-between mx-3">
-                    <div className="mt-3">
-                        <h2 className="mb-3 text-2xl text-indigo-500 font-bold">Recent History</h2>
+        <section className="flex flex-col justify-center h-full">
+            <div className= "flex flex-col justify-center bg-white rounded-3xl h-full p-4 my-5">
+                <h1 className="flex text-3xl font-bold text-indigo-600">All Transactions</h1>             
+                <div className="flex justify-center gap-4">
+                    <div className="flex flex-col gap-5">
+                        <div className="bg-slate-50 rounded-2xl p-4 w-140">
+                            <Chart />
+                        </div>
+                        <div className="flex justify-around w-full">
+                            <div className="flex flex-col items-center bg-slate-50 rounded-2xl drop-shadow-xl px-8 py-4">
+                                <h3 className="text-xl text-gray-400 font-semibold">Total Income</h3>
+                                <div className="text-3xl text-lime-500 font-bold">${totalIncomes}</div>
+                            </div>
+                            <div className="flex flex-col items-center bg-slate-50 rounded-2xl drop-shadow-xl px-8 py-4">
+                                <h3 className="text-xl text-gray-400 font-semibold">Total Expenses</h3>
+                                <div className="text-3xl text-red-500 font-bold">${totalExpenses}</div>
+                            </div>
+                        </div>                   
+                    </div>               
+                    <div className="flex flex-col justify-around w-100">
                         <div>
-                            {transactions.slice(0,3).map(transaction => (
-                                <div key={transaction._id} className="flex flex-row justify-between bg-white my-2 rounded-xl p-3">
-                                    <div className={transaction.type === 'expense' ? 'text-red-500' : 'text-lime-500'}>
-                                        {transaction.category}
-                                    </div>
-                                    <div className={transaction.type === 'expense' ? 'text-red-500' : 'text-lime-500'}>
-                                        {transaction.amount}
-                                    </div>
-                                </div>  
-                            ))}
+                            <h2 className="text-2xl font-semibold text-indigo-600 mb-5">Recent History</h2>
+                            <div className="flex flex-col justify-around h-40">
+                                {transactions.slice(0,3).map(transaction => (
+                                    <div key={transaction._id} className="flex justify-between bg-slate-50 px-4 py-2 drop-shadow-lg rounded-2xl">
+                                        <div className={transaction.type === 'expense' ? 'text-red-500' : 'text-lime-500'}>
+                                            ${transaction.category.charAt(0).toUpperCase() + transaction.category.slice(1)}
+                                        </div>
+                                        <div className={transaction.type === 'expense' ? 'text-red-500' : 'text-lime-500'}>
+                                            {transaction.type === 'expense' ? `-$${transaction.amount}` : `$${transaction.amount}`}
+                                        </div>
+                                    </div>  
+                                ))}
+                            </div>
                         </div>
-                    </div>
-
-                    <div>
-                        <div className="flex justify-between items-center mb-2">
-                            <span>Min</span>
-                            <span className="text-2xl text-indigo-500 font-bold">Salary</span>
-                            <span>Max</span>
+                        <div className="text-indigo-600">
+                            <div className="flex justify-between items-center px-4">
+                                <span>Min</span>
+                                <span className="text-2xl font-semibold">Salary</span>
+                                <span>Max</span>
+                            </div> 
+                            <div className="flex justify-between bg-slate-50 drop-shadow-lg rounded-xl px-4 py-2 text-gray-600">
+                                <span>${minIncome.toLocaleString()}</span>                        
+                                <span>${maxIncome.toLocaleString()}</span>
+                            </div> 
                         </div> 
-
-                        <div className="flex justify-between bg-white rounded-xl p-3">
-                            <span className="text-gray-500 text-xl">${minIncome.toLocaleString()}</span>                        
-                            <span className="text-gray-500 text-xl">${maxIncome.toLocaleString()}</span>
-                        </div> 
-                    </div> 
-
-                    <div>
-                        <div className="flex justify-between items-center mb-2">
-                            <span>Min</span>
-                            <span className="text-2xl text-indigo-500 font-bold">Expense</span>
-                            <span>Max</span>
+                        <div className="text-indigo-600">
+                            <div className="flex justify-between items-center px-4">
+                                <span>Min</span>
+                                <span className="text-2xl font-semibold">Expense</span>
+                                <span>Max</span>
+                            </div>
+                            <div className="flex justify-between bg-slate-50 drop-shadow-lg rounded-xl px-4 py-2 text-gray-600">
+                                <span >${minExpense.toLocaleString()}</span>                        
+                                <span >${maxExpense.toLocaleString()}</span>
+                            </div> 
                         </div>
-
-                        <div className="flex justify-between bg-white rounded-xl p-3">
-                            <span className="text-gray-500 text-xl">${minExpense.toLocaleString()}</span>                        
-                            <span className="text-gray-500 text-xl">${maxExpense.toLocaleString()}</span>
-                        </div> 
-                    </div>
-                </div>
-            </div> 
-            <div className="flex items-center justify-center">
-                <div className="flex flex-col items-center justify-center w-40 h-20 bg-white rounded-xl mb-3">
-                    <h3>Total Balance</h3>
-                    <div className="text-3xl text-blue-500">${totalBalance ? totalBalance.toLocaleString() : 0}</div>
-                </div>
-            </div>   
+                    </div>             
+                </div> 
+                <div className="flex flex-row ml-56 mt-5"> 
+                    <div className="bg-slate-50 rounded-2xl drop-shadow-xl px-8 py-4">
+                        <h3 className="text-gray-400 font-semibold">Total Balance</h3>
+                        <div className="text-4xl text-indigo-600 font-bold">${totalBalance ? totalBalance.toLocaleString() : 0}</div>
+                    </div>                
+                </div>          
+            </div>     
         </section>
     )
 }

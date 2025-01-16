@@ -15,18 +15,20 @@ import Admin from './components/Admin'
 import Footer from './components/Footer';
 import TransactionsPage from './components/TransactionsPage';
 import IncomePage from './components/IncomePage';
+import ExpensePage from './components/ExpensePage';
 
 const App = () => {
     
   const Layout = ({ children }) => (
-    <div className='h-screen flex flex-col'>
+    <div className='flex flex-row justify-center gap-12 h-screen bg-gray-100'>
       <DataProvider>
         <Header />
-        <main className='flex-grow'>
+        <main>
           {children}
+          <ToastContainer />
         </main>
-        <ToastContainer />
-        <Footer />
+        
+        {/* <Footer /> */}
       </DataProvider>
     </div>
   );
@@ -42,7 +44,8 @@ const App = () => {
               <Route path="/" element={<Layout><Home /></Layout>} />    
               <Route path="/admin" element={<Layout><Admin /></Layout>} />       
               <Route path="/transactions" element={<Layout><TransactionsPage /></Layout>} />   
-              <Route path="/incomes" element={<Layout><IncomePage /></Layout>} /> 
+              <Route path="/incomes" element={<Layout><IncomePage /></Layout>} />
+              <Route path="/expenses" element={<Layout><ExpensePage /></Layout>} /> 
           </Route>
         </Route>
         
