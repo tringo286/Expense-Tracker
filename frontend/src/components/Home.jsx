@@ -37,7 +37,7 @@ const Home = () => {
                                 {transactions.slice(0,3).map(transaction => (
                                     <div key={transaction._id} className="flex justify-between bg-slate-50 px-4 py-2 drop-shadow-lg rounded-2xl">
                                         <div className={transaction.type === 'expense' ? 'text-red-500' : 'text-lime-500'}>
-                                            ${transaction.category.charAt(0).toUpperCase() + transaction.category.slice(1)}
+                                            {transaction.category.charAt(0).toUpperCase() + transaction.category.slice(1)}
                                         </div>
                                         <div className={transaction.type === 'expense' ? 'text-red-500' : 'text-lime-500'}>
                                             {transaction.type === 'expense' ? `-$${transaction.amount}` : `$${transaction.amount}`}

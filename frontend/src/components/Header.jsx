@@ -1,6 +1,5 @@
-import { Link, useNavigate} from 'react-router-dom'
+import { Link, useNavigate, useLocation} from 'react-router-dom'
 import useLogout from '../hooks/useLogout'
-import useAuth from '../hooks/useAuth'
 import { FaChartLine } from "react-icons/fa6";
 import { FaCreditCard } from "react-icons/fa";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
@@ -10,16 +9,15 @@ import useRandomAvatar from '../hooks/useRandomAvatar';
 
 const Header = () => {
     const navigate = useNavigate();
-    const logout = useLogout();   
-    const { auth } = useAuth();
-    const avatar = useRandomAvatar();
+    const location = useLocation();
+    const logout = useLogout();           
 
-    if (auth.user) {
-      localStorage.setItem('user', auth.user);  
-    }
-      
-    const user = localStorage.getItem('user');
-    
+    const user = JSON.parse(localStorage.getItem('user'));
+    const email = user.email
+    const avatar = useRandomAvatar(email); 
+
+    const isDashBoard = location.pathname === "/";
+
     const signOut = async () => {
         await logout();
         localStorage.removeItem('user');
@@ -31,18 +29,19 @@ const Header = () => {
         <div className='flex flex-col justify-around h-2/5 w-48'>
           <div className='flex items-center gap-5'>
             <img src={avatar} alt="User Avatar" className='w-14'/>
-            <div className='text-xl font-bold text-indigo-500'>
-              {user.slice(0,3).charAt(0).toUpperCase() + user.slice(1,3)}
+            <div className='text-xl font-bold text-indigo-500'>              
+              {user.email}
             </div>
           </div>
           <div className='flex flex-col justify-center gap-4'>
-            <div className='flex items-center gap-3 w-full '>
-              <FaChartLine />
-              <h1><Link to='/'>Dashboard</Link></h1>   
+            <div className='flex items-center gap-3 w-full'>
+              <div className={`${isDashBoard ? "w-1 h-5 bg-indigo-500" : ""}`}></div>               
+              <div className={`${isDashBoard ? "text-xl" : ""}`}><FaChartLine /></div>
+              <Link to='/' className={`${isDashBoard ? "text-xl" : ""}`}>Dashboard</Link>  
             </div>       
             <div className='flex items-center gap-3 w-full '>
               <FaCreditCard />
-              <Link to="/transactions" className=''>View Transactions</Link>         
+              <Link to="/transactions">View Transactions</Link>         
             </div>
             <div className='flex items-center gap-3 w-full '>
               <FaMoneyBillTrendUp/>
