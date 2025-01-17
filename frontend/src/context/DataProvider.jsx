@@ -13,19 +13,23 @@ const DataProvider = ({ children }) => {
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
     const [date, setDate] = useState('');
-    const [amount, setAmount] = useState('');
+    const [amount, setAmount] = useState('');     
     
-    const totalBalance = totalIncomes - totalExpenses
+    const totalBalance = totalIncomes - totalExpenses    
+        
+    const user = JSON.parse(localStorage.getItem('user'));
+    const currentUserId = user.userId;
     
     useEffect(() => {        
         fetchExpenses();  
-        fetchIncomes();             
+        fetchIncomes(currentUserId); 
+                    
     }, []);     
     
     useEffect(() => {        
         handleTotalExpense();
         handleTotalIncome(); 
-        getAllTransactions();           
+        getAllTransactions();  
     }, [expenses, incomes]);    
 
     const fetchExpenses = async () => {
@@ -38,15 +42,17 @@ const DataProvider = ({ children }) => {
         }
     };  
 
-    const fetchIncomes = async () => {
-        try {
-            const response = await axios.get('/incomes');
-            const fetchedIncomes= response.data.data;
+    const fetchIncomes = async (currentUserId) => {
+        try {            
+            const response = await axios.get('/incomes', {
+                params: { currentUserId }
+            });
+            const fetchedIncomes = response.data.data;             
             setIncomes(fetchedIncomes); 
         } catch (error) {
-            console.error("An error occurred while getting total expenses:", error.message);
+            console.error("An error occurred while getting incomes:", error.message);
         }
-    };
+    };    
 
     const handleTotalExpense = () => {
         const total = expenses.reduce((total, expense) => total + expense.amount, 0);
@@ -73,6 +79,7 @@ const DataProvider = ({ children }) => {
         e.preventDefault();
         
         const newIncome = {
+            userId: currentUserId,
             category,
             description,
             amount,

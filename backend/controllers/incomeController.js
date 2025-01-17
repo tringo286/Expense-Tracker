@@ -3,15 +3,17 @@ const Income = require('../models/incomeModel')
 
 const getAllIncomes = async (req, res) => {
     try {
-        const incomes = await Income.find({});
+        const { currentUserId } = req.query;        
+        const filter = currentUserId ? { userId: currentUserId } : {};
+        const incomes = await Income.find(filter);         
         res.status(200).json({ success: true, data: incomes })
     } catch (error) {
         console.log("Error in fetching incomes: ", error.message);
         res.status(500).json({ success: false, message: "Server Error"}) // Internal Server Error
     }
-}
+};
 
-const createIncome = async (req, res) => {    
+const createIncome = async (req, res) => {   
     const income = req.body;
     
     if (!income.category || !income.description || !income.amount || !income.date) {
@@ -20,7 +22,7 @@ const createIncome = async (req, res) => {
             message: "Missing required fields"
         });
     }   
-
+    
     const newIncome = new Income(income);
 
     try {
