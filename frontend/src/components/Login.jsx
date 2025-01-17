@@ -1,64 +1,22 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import useAuth from '../hooks/useAuth';
-import axios from '../api/axios';
 
 const Login = () => {
-  const { setAuth } = useAuth();
-
-  const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
-
-  const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
-
-  const [password, setPassword] = useState(''); 
-  const [passwordError, setPasswordError] = useState('');
-  
-  useEffect(() => {
-    setEmailError('');
-    setPasswordError('');
-  }, [email, password])
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-  
-    try {
-      const res = await axios.post('/login', {
-        email,
-        password
-      }, {
-        headers: {
-          "Content-Type": "application/json"
-        },
-        withCredentials: true 
-      });      
-      
-      const data = res.data;          
-      
-      if(data.user) {        
-        setAuth({ user: data.user });
-        return navigate(from, { replace: true });
-      }         
-    
-    } catch (error) {
-      console.error("An error occurred during login:");
-  
-      if (error.response) {
-        console.log("Error response data:", error.response.data);         
-        setEmailError(error.response.data.errors.email);
-        setPasswordError(error.response.data.errors.password);
-      }       
-    }
-  };
-
+  const {      
+    email, 
+    setEmail, 
+    emailError,      
+    password, 
+    setPassword, 
+    passwordError,     
+    handleLoginSubmit
+  } = useAuth();  
   
   return (
     <div className="bg-gray-100 w-screen h-screen flex justify-center items-center">
     <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
       <h2 className="text-2xl text-gray-800 font-semibold text-center">Log In</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleLoginSubmit}>
         <div className="mb-5">
           <label htmlFor="email" className="block mb-1">Email</label>
           <input 

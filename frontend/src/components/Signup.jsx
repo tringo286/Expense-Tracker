@@ -1,56 +1,22 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from '../api/axios';
+import { Link } from "react-router-dom";
+import useAuth from '../hooks/useAuth';
 
 const Signup = () => {  
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-      setEmailError('');
-      setPasswordError('');
-  }, [email, password])
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const {      
+    email, 
+    setEmail, 
+    emailError,      
+    password, 
+    setPassword, 
+    passwordError, 
+    handleSignupSubmit  
+  } = useAuth();   
   
-    try {
-      const res = await axios.post('/signup', {
-        email,
-        password
-      }, {
-        headers: {
-          "Content-Type": "application/json"
-        }
-      });
-  
-      const data = res.data;        
-  
-      if (data.user) {
-        return navigate('/login');
-      }
-  
-    } catch (error) {
-      console.error("An error occurred during signup:");
-  
-      if (error.response) {
-        console.log("Error response data:", error.response.data);         
-        setEmailError(error.response.data.errors.email);
-        setPasswordError(error.response.data.errors.password);
-      }       
-    }
-  };
-
-
   return (
    <div className="bg-gray-100 w-screen h-screen flex justify-center items-center">
     <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
       <h2 className="text-2xl text-gray-800 font-semibold text-center">Sign Up</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSignupSubmit}>
         <div className="mb-5">
           <label htmlFor="email" className="block mb-1">Email</label>
           <input 
@@ -87,7 +53,7 @@ const Signup = () => {
         </div>
         <button type="submit" className="w-full bg-blue-500 rounded-md py-2 text-white font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4">Sign Up</button>
         <p className="text-center">Already have an account?         
-          <a href="/login" className="text-blue-500 hover:text-blue-700 ml-2">Log In</a>
+          <Link href="/login" className="text-blue-500 hover:text-blue-700 ml-2">Log In</Link>
         </p>
       </form>
     </div>

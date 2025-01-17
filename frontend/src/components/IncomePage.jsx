@@ -1,7 +1,7 @@
 import useDataProvider from '../hooks/useDataProvider';
 
 const IncomePage = () => {
-    const { totalIncomes, category, setCategory, description, setDescription, date, setDate, amount, setAmount, handleSubmit, addIncome, deleteIncome, incomes } = useDataProvider();
+    const { totalIncomes, category, setCategory, description, setDescription, date, setDate, amount, setAmount, handleSubmit,deleteIncome, incomes } = useDataProvider();     
     
     return (
         <section>
@@ -63,22 +63,23 @@ const IncomePage = () => {
                         Add Income
                     </button>
                 </form> 
-                <div>
-                {incomes.map(income => (
-                    <div key={income._id} className='border border-gray-500 mb-5'> 
-                        <div><strong>Category:</strong> {income.category}</div>
-                        <div><strong>Description:</strong> {income.description}</div>
-                        <div><strong>Amount:</strong> ${income.amount.toFixed(2)}</div>
-                        <div><strong>Date:</strong> {new Date(income.date).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'numeric',
-                            day: 'numeric'  
-                            })}
+                <div>                
+                {incomes.map(
+                    income => (
+                        <div key={income._id} className='border border-gray-500 mb-5'> 
+                            <div><strong>Category:</strong> {income.category}</div>
+                            <div><strong>Description:</strong> {income.description}</div>
+                            <div><strong>Amount:</strong> ${income.amount.toFixed(2)}</div>
+                            <div><strong>Date:</strong> {new Date(income.date).toLocaleDateString('en-US', {
+                                year: 'numeric',
+                                month: 'numeric',
+                                day: 'numeric'  
+                                })}
+                            </div>
+                            <button onClick={() => deleteIncome(income._id)}>Delete</button>        
                         </div>
-                        <button onClick={() => deleteIncome(income._id)}>Delete</button>        
-                    </div>                     
-            ))}
-        </div>            
+                    ))}
+                </div>            
             </div>
         </section>
     )

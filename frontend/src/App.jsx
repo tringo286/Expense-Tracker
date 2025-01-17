@@ -26,8 +26,7 @@ const App = () => {
         <main>
           {children}
           <ToastContainer />
-        </main>
-        
+        </main>        
         {/* <Footer /> */}
       </DataProvider>
     </div>

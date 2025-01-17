@@ -62,10 +62,10 @@ const handleLogin = async (req, res) => {
 
         // Create secure cookie with refresh token
         res.cookie('jwt', refreshToken, { httpOnly: true, secure: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 });
-        res.status(200).json({ success: true, user: email, accessToken });
+        res.status(200).json({ success: true, user: {email, userId: user._id}, accessToken });             
     } catch (error) {              
         res.status(400).json({ success: false, errors: error});
-    }
+    }   
 };
 
 module.exports = { handleLogin };
