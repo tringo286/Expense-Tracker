@@ -36,8 +36,8 @@ const handleLogin = async (req, res) => {
     }   
 
     try {
-        const user = await User.login(email, password);
-        
+        const user = await User.login(email, password)        
+
         // Access token for short time to authenticate user for API access
         const accessToken = jwt.sign({ email }, "my secret key", { expiresIn: '10s' });
 
@@ -50,7 +50,15 @@ const handleLogin = async (req, res) => {
 
         // Create secure cookie with refresh token
         res.cookie('jwt', refreshToken, { httpOnly: true, secure: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 });
-        res.status(200).json({ success: true, user: {email, userId: user._id}, accessToken });             
+        res.status(200).json({
+            success: true,
+            user: {
+                fullName: foundUser.fullName,  
+                email: foundUser.email,
+                userId: foundUser._id
+            },
+            accessToken
+        });             
     } catch (error) {              
         res.status(400).json({ success: false, errors: error});
     }   

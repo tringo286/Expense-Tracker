@@ -22,7 +22,7 @@ const AuthProvider = ({ children }) => {
         setEmailError('');
         setPasswordError('');     
         setConfirmPasswordError('');   
-      }, [fullName, email, password, confirmPassword, location])
+    }, [fullName, email, password, confirmPassword, location])
     
     useEffect(() => {
       setFullName('');
@@ -45,7 +45,7 @@ const AuthProvider = ({ children }) => {
             withCredentials: true 
           });      
           
-          const data = res.data;          
+          const data = res.data;              
           
           if(data.user) {        
             setAuth({ user: data.user });
@@ -85,7 +85,7 @@ const AuthProvider = ({ children }) => {
       
           const data = res.data;        
       
-          if (data.user) {                                   
+          if (data.user) {                                                 
             return navigate('/login');
           }
       
@@ -106,8 +106,7 @@ const AuthProvider = ({ children }) => {
                 email, setEmail, emailError, setEmailError,
                 password, setPassword, passwordError, setPasswordError, 
                 handleLoginSubmit, handleSignupSubmit,
-                confirmPassword, setConfirmPassword, confirmPasswordError, setConfirmPasswordError, 
-                fullName, setFullName
+                confirmPassword, setConfirmPassword, confirmPasswordError, setConfirmPasswordError                
         }}>
             {children}
         </AuthContext.Provider>

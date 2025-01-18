@@ -75,8 +75,8 @@ const Signup = () => {
           <label htmlFor="confirmPassword" className="block mb-1">Confirm Password</label>
             <input 
               type="password" 
-              name="password" 
-              id="password" 
+              name="confirmPassword" 
+              id="confirmPassword" 
               className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500" 
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
