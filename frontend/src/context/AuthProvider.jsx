@@ -6,10 +6,13 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
     const [auth, setAuth] =  useState({});
+    const [fullName, setFullName] = useState('');    
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
     const [password, setPassword] = useState(''); 
     const [passwordError, setPasswordError] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -39,6 +42,8 @@ const AuthProvider = ({ children }) => {
           if(data.user) {        
             setAuth({ user: data.user });
             localStorage.setItem('user', JSON.stringify(data.user));  
+            setEmail('');
+            setPassword('');
             return navigate(from, { replace: true });
           }         
         
@@ -58,6 +63,7 @@ const AuthProvider = ({ children }) => {
       
         try {
           const res = await axios.post('/signup', {
+            fullName,
             email,
             password
           }, {
@@ -69,6 +75,10 @@ const AuthProvider = ({ children }) => {
           const data = res.data;        
       
           if (data.user) {
+            // Clear the form fields after successful signup
+            setFullName('');
+            setEmail('');
+            setPassword('');            
             return navigate('/login');
           }
       
@@ -77,18 +87,20 @@ const AuthProvider = ({ children }) => {
       
           if (error.response) {
             console.log("Error response data:", error.response.data);         
-            setEmailError(error.response.data.errors.email);
-            setPasswordError(error.response.data.errors.password);
+            setEmailError(error.response.data.errors?.email);
+            setPasswordError(error.response.data.errors?.password);
           }       
         }
     };
     
     return (
         <AuthContext.Provider value={{ 
-                auth, setAuth,
+                auth, setAuth, fullName, setFullName,
                 email, setEmail, emailError, setEmailError,
                 password, setPassword, passwordError, setPasswordError, 
-                handleLoginSubmit, handleSignupSubmit
+                handleLoginSubmit, handleSignupSubmit,
+                confirmPassword, setConfirmPassword, confirmPasswordError, setConfirmPasswordError, 
+                fullName, setFullName
         }}>
             {children}
         </AuthContext.Provider>

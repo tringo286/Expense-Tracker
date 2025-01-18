@@ -5,33 +5,22 @@ const jwt = require('jsonwebtoken');
 const handleLogin = async (req, res) => {
     const { email, password } = req.body;
 
-    if (!email) {
+    if (!email || !password) {
         return res.status(400).json({
             success: false,
             errors: {
-                email: "Please enter an email",
-                password: ""
+                email: email ? "" : "Please enter your email",
+                password: password ? "" : "Please enter a password"
             }
         });
-    }     
-
-    if (!password) {
-        return res.status(400).json({
-            success: false,
-            errors: {
-                email: "",
-                password: "Please enter a password"
-            }
-        });
-    }   
+    }  
 
     const foundUser = await User.findOne({ email });
     if (!foundUser) {
         return res.status(401).json({
             success: false,
-            errors: {
-                email: "Email is not registered",
-                password: ""
+            errors: {   
+                email: "Email is not registered",                
             }
         });
     }   
@@ -40,8 +29,7 @@ const handleLogin = async (req, res) => {
     if (!matchPassword) {
         return res.status(401).json({
             success: false,
-            errors: {
-                email: "",
+            errors: {                
                 password: "Incorrect password"
             }
         });

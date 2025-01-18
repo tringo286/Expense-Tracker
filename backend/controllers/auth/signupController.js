@@ -2,33 +2,23 @@ const User = require('../../models/userModel');
 const bcrypt = require('bcrypt');
 
 const handleSignup = async (req,res) => {
-    const { email, password } = req.body;
+    const { fullName, email, password } = req.body;
 
-    if (!email) {
+    if (!fullName || !email || !password) {
         return res.status(400).json({
             success: false,
             errors: {
-                email: "Please enter an email",
-                password: ""
+                fullName: fullName ? "" : "Please enter your full name",
+                email: email ? "" : "Please enter your email",
+                password: password ? "" : "Please enter a password"
             }
         });
-    }     
-
-    if (!password) {
-        return res.status(400).json({
-            success: false,
-            errors: {
-                email: "",
-                password: "Please enter a password"
-            }
-        });
-    }     
+    }      
     
     if (password.length < 3) {
         return res.status(400).json({
             success: false,
             errors: {
-                email: "",
                 password: "Password must be at least 3 characters long."
             }
         });
@@ -40,8 +30,7 @@ const handleSignup = async (req,res) => {
         return res.status(409).json({ // Coflict
             success: false,
             errors: {
-                email: "Email is already registered",
-                password: ""
+                email: "Email is already registered"                
             }
         });
     }  
@@ -50,7 +39,7 @@ const handleSignup = async (req,res) => {
         // Encrypt the password
         const salt = await bcrypt.genSalt();
         const hashedPassword = await bcrypt.hash(password, salt);
-        const newUser = await User.create({ email, password: hashedPassword });     
+        const newUser = await User.create({ fullName, email, password: hashedPassword });     
         res.status(201).json({ success: true, user: newUser });
     } catch (error) {                  
         res.status(500).json({ success: false, errors: error});
