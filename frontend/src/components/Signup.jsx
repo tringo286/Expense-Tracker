@@ -13,8 +13,7 @@ const Signup = () => {
     passwordError, 
     confirmPassword,
     setConfirmPassword,
-    confirmPasswordError,
-    setConfirmPasswordError,
+    confirmPasswordError,    
     handleSignupSubmit  
   } = useAuth();  
   
@@ -49,10 +48,10 @@ const Signup = () => {
             placeholder="JohnDoe@gmail.com"
           />            
           {emailError && 
-          <div 
-            className="text-red-500 bg-red-100 border border-red-500 rounded-md py-1 pl-2 mt-2">
-            {emailError}
-          </div>}
+            <div 
+              className="text-red-500 bg-red-100 border border-red-500 rounded-md py-1 pl-2 mt-2">
+              {emailError}
+            </div>}
         </div>
         <div className="mb-5">
           <label htmlFor="password" className="block mb-1">Password</label>
@@ -67,24 +66,29 @@ const Signup = () => {
             placeholder="Example123"
           />
           {passwordError && 
-          <div 
-            className="text-red-500 bg-red-100 border border-red-500 rounded-md py-1 pl-2 mt-2">
-            {passwordError}
-          </div>}
+            <div 
+              className="text-red-500 bg-red-100 border border-red-500 rounded-md py-1 pl-2 mt-2">
+              {passwordError}
+            </div>}
         </div>
-        {/* <div className="mb-5">
+        <div className="mb-5">
           <label htmlFor="confirmPassword" className="block mb-1">Confirm Password</label>
             <input 
               type="password" 
               name="password" 
               id="password" 
               className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500" 
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               required 
               placeholder="Example123"
             />
-        </div> */}
+            {confirmPasswordError && 
+              <div 
+                className="text-red-500 bg-red-100 border border-red-500 rounded-md py-1 pl-2 mt-2">
+                {confirmPasswordError}
+              </div>}
+        </div>
         <button 
           type="submit" 
           className="w-full bg-blue-500 rounded-md py-2 text-white font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"

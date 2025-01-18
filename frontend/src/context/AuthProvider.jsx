@@ -20,8 +20,16 @@ const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         setEmailError('');
-        setPasswordError('');
-      }, [email, password])
+        setPasswordError('');     
+        setConfirmPasswordError('');   
+      }, [fullName, email, password, confirmPassword, location])
+    
+    useEffect(() => {
+      setFullName('');
+      setEmail('');            
+      setPassword('');
+      setConfirmPassword('');
+    }, [location]);
 
     const handleLoginSubmit = async (event) => {
         event.preventDefault();
@@ -41,9 +49,7 @@ const AuthProvider = ({ children }) => {
           
           if(data.user) {        
             setAuth({ user: data.user });
-            localStorage.setItem('user', JSON.stringify(data.user));  
-            setEmail('');
-            setPassword('');
+            localStorage.setItem('user', JSON.stringify(data.user));            
             return navigate(from, { replace: true });
           }         
         
@@ -61,6 +67,11 @@ const AuthProvider = ({ children }) => {
     const handleSignupSubmit = async (event) => {
         event.preventDefault();
       
+        if (password !== confirmPassword) {
+          setConfirmPasswordError("Passwords do not match");
+          return;
+        }
+
         try {
           const res = await axios.post('/signup', {
             fullName,
@@ -74,11 +85,7 @@ const AuthProvider = ({ children }) => {
       
           const data = res.data;        
       
-          if (data.user) {
-            // Clear the form fields after successful signup
-            setFullName('');
-            setEmail('');
-            setPassword('');            
+          if (data.user) {                                   
             return navigate('/login');
           }
       
