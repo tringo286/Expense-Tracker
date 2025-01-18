@@ -4,11 +4,11 @@ import Chart from "./Chart";
 const Home = () => {
     const { totalExpenses, totalIncomes, totalBalance, transactions, incomes, expenses} = useDataProvider();
   
-    const maxIncome = Math.max(...incomes.map(transaction => transaction.amount));
-    const minIncome = Math.min(...incomes.map(transaction => transaction.amount));
-  
-    const maxExpense = Math.max(...expenses.map(transaction => transaction.amount));
-    const minExpense = Math.min(...expenses.map(transaction => transaction.amount));
+    const maxIncome = incomes.length ? Math.max(...incomes.map(transaction => transaction.amount)) : 0;
+    const minIncome = incomes.length ? Math.min(...incomes.map(transaction => transaction.amount)) : 0;
+
+    const maxExpense = expenses.length ? Math.max(...expenses.map(transaction => transaction.amount)) : 0;
+    const minExpense = expenses.length ? Math.min(...expenses.map(transaction => transaction.amount)) : 0;
     
     return (
         <section className="flex flex-col justify-center h-full">
@@ -33,18 +33,22 @@ const Home = () => {
                     <div className="flex flex-col justify-around w-100">
                         <div>
                             <h2 className="text-2xl font-semibold text-indigo-600 mb-5">Recent History</h2>
-                            <div className="flex flex-col justify-around h-40">
-                                {transactions.slice(0,3).map(transaction => (
-                                    <div key={transaction._id} className="flex justify-between bg-slate-50 px-4 py-2 drop-shadow-lg rounded-2xl">
-                                        <div className={transaction.type === 'expense' ? 'text-red-500' : 'text-lime-500'}>
-                                            {transaction.category.charAt(0).toUpperCase() + transaction.category.slice(1)}
+                            {transactions.length > 0 ? (
+                                <div className="flex flex-col justify-around h-40">
+                                    {transactions.slice(0, 3).map(transaction => (
+                                        <div key={transaction._id} className="flex justify-between bg-slate-50 px-4 py-2 drop-shadow-lg rounded-2xl">
+                                            <div className={transaction.type === 'expense' ? 'text-red-500' : 'text-lime-500'}>
+                                                {transaction.category.charAt(0).toUpperCase() + transaction.category.slice(1)}
+                                            </div>
+                                            <div className={transaction.type === 'expense' ? 'text-red-500' : 'text-lime-500'}>
+                                                {transaction.type === 'expense' ? `-$${transaction.amount}` : `$${transaction.amount}`}
+                                            </div>
                                         </div>
-                                        <div className={transaction.type === 'expense' ? 'text-red-500' : 'text-lime-500'}>
-                                            {transaction.type === 'expense' ? `-$${transaction.amount}` : `$${transaction.amount}`}
-                                        </div>
-                                    </div>  
-                                ))}
-                            </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <p className="text-gray-500">No transactions available.</p>
+                            )}
                         </div>
                         <div className="text-indigo-600">
                             <div className="flex justify-between items-center px-4">
@@ -64,8 +68,8 @@ const Home = () => {
                                 <span>Max</span>
                             </div>
                             <div className="flex justify-between bg-slate-50 drop-shadow-lg rounded-xl px-4 py-2 text-gray-600">
-                                <span >${minExpense.toLocaleString()}</span>                        
-                                <span >${maxExpense.toLocaleString()}</span>
+                                <span>${minExpense.toLocaleString()}</span>                        
+                                <span>${maxExpense.toLocaleString()}</span>
                             </div> 
                         </div>
                     </div>             
