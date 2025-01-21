@@ -27,37 +27,22 @@ const Header = () => {
     }    
 
     return (
-      <header className="flex flex-col justify-between p-4 bg-white rounded-3xl my-5">
-        <div className='flex flex-col justify-around h-2/5 w-52'>
-          <div className='flex items-center gap-5'>
+      <header className="col-span-3 p-10">
+        <div className='grid grid-rows-12 bg-white h-full p-6 border rounded-3xl'>
+          <div className='row-span-2 flex flex-row items-center gap-4 mb-4 '>
             <img src={avatar} alt="User Avatar" className='w-14'/>
-            <div className='text-xl font-bold text-indigo-500'>              
-              {user.fullName}
-            </div>
+            <p className='text-2xl text-indigo-500 font-semibold'>{user.fullName}</p>
           </div>
-          <div className='flex flex-col justify-center gap-4'>
-            <div className='flex items-center gap-3 w-full'>                           
-              <div className={`${isDashBoardPage ? "text-xl text-indigo-500" : ""}`}><FaChartLine /></div>
-              <Link to='/' className={`${isDashBoardPage ? "text-xl font-bold text-indigo-500" : ""}`}>Dashboard</Link>  
-            </div>       
-            <div className='flex items-center gap-3 w-full'>                           
-              <div className={`${isTransactionPage ? "text-xl text-indigo-500" : ""}`}><FaCreditCard /></div>
-              <Link to='/transactions' className={`${isTransactionPage ? "text-xl font-bold text-indigo-500" : ""}`}>View Transactions</Link>  
-            </div>  
-            <div className='flex items-center gap-3 w-full'>                           
-              <div className={`${isIncomePage ? "text-xl text-indigo-500" : ""}`}><FaMoneyBillTrendUp /></div>
-              <Link to='/incomes' className={`${isIncomePage ? "text-xl font-bold text-indigo-500" : ""}`}>Incomes</Link>  
-            </div>  
-            <div className='flex items-center gap-3 w-full'>                           
-              <div className={`${isExpensePage ? "text-xl text-indigo-500" : ""}`}><FaMoneyBillTransfer /></div>
-              <Link to='/expenses' className={`${isExpensePage ? "text-xl font-bold text-indigo-500" : ""}`}>Expenses</Link>  
-            </div> 
+          <div className='row-span-9 flex flex-col gap-6'>
+            <Link to='/' className={`inline-flex items-center gap-x-4 text-gray-600 font-semibold hover:text-indigo-700 ${isDashBoardPage ? 'text-lg font-bold text-indigo-500' : ''}`}><FaChartLine />Dashboard</Link>           
+            <Link to='/incomes' className={`inline-flex items-center gap-x-4 text-gray-600 font-semibold hover:text-indigo-700 ${isIncomePage ? 'text-lg font-bold text-indigo-500' : ''}`}><FaMoneyBillTrendUp />Incomes</Link>  
+            <Link to='/expenses' className={`inline-flex items-center gap-x-4 text-gray-600 font-semibold hover:text-indigo-700 ${isExpensePage ? 'text-lg font-bold text-indigo-500' : ''}`}><FaMoneyBillTransfer />Expenses</Link>   
           </div>
-        </div>
-        <div className='flex justify-start items-center gap-3'>
-            <MdLogout />
-            <button onClick={signOut}>Log Out</button>
-        </div> 
+          <div className='row-span-1 flex justify-start items-center gap-3 hover:text-indigo-700'>
+              <MdLogout />
+              <button onClick={signOut}>Log Out</button>
+          </div>  
+        </div>        
       </header>
     )
 }
