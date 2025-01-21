@@ -6,19 +6,19 @@ const incomeSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     }, 
-    date: {
+    incomeDate: {
         type: Date,        
         required: true,    
     },
-    category: {
+    incomeCategory: {
         type: String,
         required: true
     },
-    description: {
+    incomeDescription: {
         type: String,
         required: true,
     },
-    amount: {
+    incomeAmount: {
         type: Number,
         required: true
     }

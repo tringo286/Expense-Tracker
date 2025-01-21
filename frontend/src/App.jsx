@@ -9,25 +9,22 @@ import { DataProvider } from './context/DataProvider';
 import Header from './components/Header';
 import Signup from "./components/Signup";
 import Login from "./components/Login";''
-import Home from './components/Home'
+import Dashboard from './components/Dashboard'
 import Missing  from "./components/Missing";
 import Admin from './components/Admin'
-import Footer from './components/Footer';
-import TransactionsPage from './components/TransactionsPage';
 import IncomePage from './components/IncomePage';
 import ExpensePage from './components/ExpensePage';
 
 const App = () => {
     
   const Layout = ({ children }) => (
-    <div className='flex flex-row justify-center gap-12 h-screen bg-gray-100'>
+    <div className='grid grid-cols-12 h-screen' style={{ backgroundImage: 'url(/bg.png)'}}>
       <DataProvider>
         <Header />
-        <main>
+        <main className='col-span-9 py-10 pr-10'>
           {children}
           <ToastContainer />
-        </main>        
-        {/* <Footer /> */}
+        </main>            
       </DataProvider>
     </div>
   );
@@ -40,9 +37,8 @@ const App = () => {
 
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth />}>                           
-              <Route path="/" element={<Layout><Home /></Layout>} />    
-              <Route path="/admin" element={<Layout><Admin /></Layout>} />       
-              <Route path="/transactions" element={<Layout><TransactionsPage /></Layout>} />   
+              <Route path="/" element={<Layout><Dashboard /></Layout>} />    
+              <Route path="/admin" element={<Layout><Admin /></Layout>} />     
               <Route path="/incomes" element={<Layout><IncomePage /></Layout>} />
               <Route path="/expenses" element={<Layout><ExpensePage /></Layout>} /> 
           </Route>

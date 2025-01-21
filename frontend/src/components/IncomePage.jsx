@@ -7,7 +7,23 @@ import { FaDollarSign } from "react-icons/fa";
 import { FaCalendar } from "react-icons/fa";
 
 const IncomePage = () => {
-    const { totalIncomes, incomeCategory, setIncomeCategory, incomeDescription, setIncomeDescription, incomeDate, setIncomeDate, incomeAmount, setIncomeAmount, handleIncomeSubmit, deleteIncome, incomes } = useDataProvider();     
+    const { 
+        totalIncomes,
+        incomeCategory, 
+        setIncomeCategory, 
+        incomeDescription,
+        setIncomeDescription, 
+        incomeDate, 
+        setIncomeDate, 
+        incomeAmount, 
+        setIncomeAmount, 
+        handleIncomeSubmit, 
+        deleteIncome, 
+        incomes 
+    } = useDataProvider();  
+    
+    // Sort incomes from newest to oldest
+    incomes.sort((a, b) => new Date(b.incomeDate) - new Date(a.incomeDate)); 
     
     return (
         <section className='bg-white h-full w-full border rounded-3xl grid grid-cols-12 grid-rows-12 p-3'>           
@@ -27,7 +43,7 @@ const IncomePage = () => {
                             id='category'
                             name='category'
                             placeholder='Income Category'
-                            className='bg-slate-50 border border-slate-100 rounded-xl shadow-lg px-2 py-3 text-gray-500 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500'
+                            className='bg-slate-50 border border-slate-100 rounded-xl shadow-lg px-2 py-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500'
                             require =''
                             value={incomeCategory}
                             onChange={(e) => setIncomeCategory(e.target.value)}
@@ -41,7 +57,7 @@ const IncomePage = () => {
                             id='description'
                             name='description'
                             placeholder='Income Description'
-                            className='bg-slate-50 border border-slate-100 rounded-xl shadow-lg px-2 py-3 text-gray-500 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500'
+                            className='bg-slate-50 border border-slate-100 rounded-xl shadow-lg px-2 py-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500'
                             require =''
                             value={incomeDescription}
                             onChange={(e) => setIncomeDescription(e.target.value)}
@@ -54,7 +70,7 @@ const IncomePage = () => {
                             id='amount'
                             name='amount'
                             placeholder='Income Amount'
-                            className='bg-slate-50 border border-slate-100 rounded-xl shadow-lg px-2 py-3 text-gray-500 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500'
+                            className='bg-slate-50 border border-slate-100 rounded-xl shadow-lg px-2 py-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500'
                             require =''
                             value={incomeAmount}
                             onChange={(e) => setIncomeAmount(e.target.value)}
@@ -67,13 +83,13 @@ const IncomePage = () => {
                             id='date'
                             name='date' 
                             placeholder='MM/DD/YYYY'
-                            className='bg-slate-50 border border-slate-100 rounded-xl shadow-lg px-2 py-3 text-gray-500 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500'
+                            className='bg-slate-50 border border-slate-100 rounded-xl shadow-lg px-2 py-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500'
                             require =''
                             value={incomeDate}
                             onChange={(e) => setIncomeDate(e.target.value)}
                         />
                     </div>
-                    <div className='bg-indigo-500 border rounded-full shadow-lg p-4 flex justify-center items-center gap-3 text-xl'>
+                    <div className='bg-indigo-500 border rounded-full shadow-lg p-4 flex justify-center items-center gap-3 text-xl w-2/3'>
                         <div className='text-white'><FaPlus /></div>
                         <button
                             className='text-white'
@@ -87,23 +103,23 @@ const IncomePage = () => {
             <div className='col-start-5 col-end-13 row-start-4 row-end-13 flex flex-col gap-y-5 p-3'>
                 {incomes.length > 0 ? (
                     incomes.slice(0, 4).map(income => (
-                        <div key={income._id} className="flex justify-between p-4 text-gray-500 bg-white border border-slate-200 rounded-xl shadow-lg">
-                            <div className='flex flex-col w-9/12 gap-3'>
+                        <div key={income._id} className="flex justify-between items-center p-4 text-gray-500 bg-white border border-slate-200 rounded-xl shadow-lg">
+                            <div className='flex flex-col w-10/12 gap-3'>
                                 <div className='flex items-center gap-2 text-lime-500'>
                                     <div className='text-2xl'><GoDotFill /></div>
                                     <div className='text-lg font-semibold'>{income.incomeCategory.charAt(0).toUpperCase() + income.incomeCategory.slice(1)}</div>
                                 </div>
-                                <div className='flex justify-between'>
-                                    <div className='flex items-center gap-2'>
-                                        <div className='normal-weight'><FaCalendar /></div>
+                                <div className='grid grid-cols-8'>
+                                    <div className='flex items-center gap-2 col-span-3'>
+                                        <div className='normal-weight'><BsChatFill /></div>
                                         <div> {income.incomeDescription}</div>
                                     </div> 
-                                    <div className='flex items-center'>
+                                    <div className='flex items-center col-span-2'>
                                         <div><FaDollarSign /></div>
                                         <div>{income.incomeAmount}</div>
                                     </div>
-                                    <div className='flex items-center gap-2'>
-                                        <BsChatFill />
+                                    <div className='flex items-center gap-2 col-span-3'>
+                                        <FaCalendar />
                                         <div>Date: {new Date(income.incomeDate).toLocaleDateString('en-US', {
                                             year: 'numeric',
                                             month: 'numeric',   
@@ -113,17 +129,15 @@ const IncomePage = () => {
                                     </div>              
                                 </div>
                             </div>
-                            <button onClick={() => deleteIncome(income._id)} className=""><FaTrash  className="w-10 h-10 p-2 border rounded-xl bg-indigo-500 text-white"/></button>                             
+                            <button onClick={() => deleteIncome(income._id)} className="flex justify-center items-center w-10 h-10 border rounded-xl bg-indigo-500"><FaTrash  className="text-white"/></button>                             
                         </div>
                     ))) : (
                         <p className="text-center text-gray-500 text-xl">No incomes available.</p>
                     )              
                 }
-
-            </div>
-                
+            </div>                
         </section>
     )
-    }
+}
 
 export default IncomePage

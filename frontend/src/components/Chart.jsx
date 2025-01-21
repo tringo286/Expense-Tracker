@@ -17,7 +17,7 @@ const Chart = () => {
 
     const data = {
         labels: incomes.map(income => {
-            const date = new Date(income.date);
+            const date = new Date(income.incomeDate);
             return date.toLocaleDateString('en-US');  // mm/dd/yyyy
         }),
         datasets: [
@@ -25,7 +25,7 @@ const Chart = () => {
                 label: 'Income',
                 data: [
                     ...incomes.map(income => {
-                        return income.amount;
+                        return income.incomeAmount;
                     })
                 ],
                 backgroundColor: 'green',
@@ -35,7 +35,7 @@ const Chart = () => {
                 label: 'Expenses',
                 data: [
                     ...expenses.map(expense => {
-                        return expense.amount;
+                        return expense.expenseAmount;
                     })
                 ],
                 backgroundColor: 'red',
