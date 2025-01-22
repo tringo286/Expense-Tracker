@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
 import useAuth from '../hooks/useAuth';
+import { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 
 const Signup = () => {  
   const {
@@ -16,6 +19,17 @@ const Signup = () => {
     confirmPasswordError,    
     handleSignupSubmit  
   } = useAuth();  
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
   
   return (
     <section className="h-screen w-screen grid grid-cols-12">
@@ -65,10 +79,10 @@ const Signup = () => {
                   {emailError}
                 </div>}
             </div>
-            <div className="mb-5">
+            <div className="mb-5 relative">
               <label htmlFor="password"></label>
               <input 
-                type="password" 
+                type={showPassword ? "text" : "password"} 
                 name="password" 
                 id="password" 
                 className="border-b-2 p-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:rounded-sm" 
@@ -77,16 +91,24 @@ const Signup = () => {
                 required 
                 placeholder="Enter your password"
               />
+              <span
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                onClick={togglePasswordVisibility}
+                role="button"
+                aria-label="Toggle password visibility"
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
               {passwordError && 
                 <div 
                   className="text-red-500 bg-red-100 border border-red-500 rounded-md py-1 pl-2 mt-2">
                   {passwordError}
                 </div>}
             </div>
-            <div className="mb-5">
+            <div className="mb-5 relative">
               <label htmlFor="confirmPassword"></label>
                 <input 
-                  type="password" 
+                  type={showConfirmPassword ? "text" : "password"} 
                   name="confirmPassword" 
                   id="confirmPassword" 
                   className="border-b-2 p-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:rounded-sm" 
@@ -95,6 +117,14 @@ const Signup = () => {
                   required 
                   placeholder="Confirm your password  "
                 />
+                <span
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                  onClick={toggleConfirmPasswordVisibility}
+                  role="button"
+                  aria-label="Toggle confirm password visibility"
+                >
+                  {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                </span>
                 {confirmPasswordError && 
                   <div 
                     className="text-red-500 bg-red-100 border border-red-500 rounded-md py-1 pl-2 mt-2">

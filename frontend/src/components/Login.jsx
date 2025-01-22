@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import useAuth from '../hooks/useAuth';
+import { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const {      
@@ -11,6 +13,13 @@ const Login = () => {
     passwordError,     
     handleLoginSubmit
   } = useAuth();  
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   
   return (
     <section className="h-screen w-screen grid grid-cols-12">
@@ -47,10 +56,10 @@ const Login = () => {
                 {emailError}
               </div>}
             </div>
-            <div className="mb-10">
+            <div className="mb-10 relative">
               <label htmlFor="password"></label>
               <input 
-                type="password" 
+                type={showPassword ? "text" : "password"}
                 name="password" 
                 id="password" 
                 className="border-b-2 p-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:rounded-sm" 
@@ -59,6 +68,14 @@ const Login = () => {
                 required 
                 placeholder="Enter your password"
               />
+              <span
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                onClick={togglePasswordVisibility}
+                role="button"
+                aria-label="Toggle password visibility"
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span> 
               {passwordError && 
               <div 
                 className="text-red-500 bg-red-100 border border-red-500 rounded-md py-1 pl-2 mt-2">
