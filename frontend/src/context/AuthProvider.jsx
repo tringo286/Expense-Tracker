@@ -10,9 +10,11 @@ const AuthProvider = ({ children }) => {
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
     const [password, setPassword] = useState(''); 
+    const [showPassword, setShowPassword] = useState(false);
     const [passwordError, setPasswordError] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [confirmPasswordError, setConfirmPasswordError] = useState('');
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [confirmPasswordError, setConfirmPasswordError] = useState('');    
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -99,6 +101,14 @@ const AuthProvider = ({ children }) => {
           }       
         }
     };
+
+    const togglePasswordVisibility = () => {
+      setShowPassword(!showPassword);
+    };
+
+    const toggleConfirmPasswordVisibility = () => {
+      setShowConfirmPassword(!showConfirmPassword);
+    };
     
     return (
         <AuthContext.Provider value={{ 
@@ -106,7 +116,9 @@ const AuthProvider = ({ children }) => {
                 email, setEmail, emailError, setEmailError,
                 password, setPassword, passwordError, setPasswordError, 
                 handleLoginSubmit, handleSignupSubmit,
-                confirmPassword, setConfirmPassword, confirmPasswordError, setConfirmPasswordError                
+                confirmPassword, setConfirmPassword, confirmPasswordError, setConfirmPasswordError,
+                togglePasswordVisibility, showPassword,
+                toggleConfirmPasswordVisibility, showConfirmPassword,   
         }}>
             {children}
         </AuthContext.Provider>

@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
 import useAuth from '../hooks/useAuth';
-import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-
 
 const Signup = () => {  
   const {
@@ -13,24 +11,17 @@ const Signup = () => {
     emailError,      
     password, 
     setPassword, 
+    showPassword,
     passwordError, 
     confirmPassword,
     setConfirmPassword,
+    showConfirmPassword,
     confirmPasswordError,    
-    handleSignupSubmit  
+    handleSignupSubmit,
+    togglePasswordVisibility,
+    toggleConfirmPasswordVisibility,
   } = useAuth();  
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const toggleConfirmPasswordVisibility = () => {
-    setShowConfirmPassword(!showConfirmPassword);
-  };
-  
   return (
     <section className="h-screen w-screen grid grid-cols-12">
       <div className="relative col-span-6">

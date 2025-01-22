@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* This targets the outermost wrapper div for DatePicker */
+.react-datepicker__portal,
+.react-datepicker__header,
+.react-datepicker__input-container,
+.react-datepicker__month-dropdown-container {
+  width: 100% !important;
+}
+
+/* This targets the input container div, if needed */
+.react-datepicker__input-container {
+  width: 100% !important;
+}

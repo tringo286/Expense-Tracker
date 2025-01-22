@@ -5,6 +5,8 @@ import { BsChatFill } from "react-icons/bs";
 import { GoDotFill } from "react-icons/go";
 import { FaDollarSign } from "react-icons/fa";
 import { FaCalendar } from "react-icons/fa";
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 
 const ExpensePage = () => {
   const {
@@ -20,7 +22,7 @@ const ExpensePage = () => {
     handleExpenseSubmit,     
     deleteExpense,
     expenses,    
-  }  = useDataProvider();
+  }  = useDataProvider();  
 
   // Sort expenses from newest to oldest
   expenses.sort((a, b) => new Date(b.expenseDate) - new Date(a.expenseDate)); 
@@ -30,7 +32,7 @@ const ExpensePage = () => {
         <div className='col-start-1 col-end-13 row-start-1 row-end-4 px-3 pt-3 flex flex-col justify-around'>
             <h1 className="flex items-center text-3xl font-semibold text-indigo-500">Expenses</h1>
             <div className='flex justify-center items-center gap-2 py-4 bg-slate-50 border border-slate-100 rounded-xl shadow-lg'>                    
-                <h2 className=" text-2xl font-semibold text-indigo-500">Total Expense:</h2>
+                <h2 className="text-2xl font-semibold text-indigo-500">Total Expense:</h2>
                 <p className='text-red-500 text-3xl font-semibold'>-${totalExpenses}</p>
             </div>
         </div>
@@ -44,10 +46,9 @@ const ExpensePage = () => {
                         name='category'
                         placeholder='Expense Category'
                         className='bg-slate-50 border border-slate-100 rounded-xl shadow-lg px-2 py-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500'
-                        require =''
+                        required
                         value={expenseCategory}
-                        onChange={(e) => setExpenseCategory(e.target.value)}
-                        
+                        onChange={(e) => setExpenseCategory(e.target.value)}                        
                     />
                 </div>
                 <div>
@@ -58,7 +59,7 @@ const ExpensePage = () => {
                         name='description'
                         placeholder='Expense Description'
                         className='bg-slate-50 border border-slate-100 rounded-xl shadow-lg px-2 py-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500'
-                        require =''
+                        required
                         value={expenseDescription}
                         onChange={(e) => setExpenseDescription(e.target.value)}
                     />
@@ -71,22 +72,19 @@ const ExpensePage = () => {
                         name='amount'
                         placeholder='Expense Amount'
                         className='bg-slate-50 border border-slate-100 rounded-xl shadow-lg px-2 py-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500'
-                        require =''
+                        required
                         value={expenseAmount}
                         onChange={(e) => setExpenseAmount(e.target.value)}
                     />
-                    </div>
-                <div>
-                    <label htmlFor='date' className='block'></label>
-                    <input 
-                        type="text"
-                        id='date'
-                        name='date' 
-                        placeholder='MM/DD/YYYY'
-                        className='bg-slate-50 border border-slate-100 rounded-xl shadow-lg px-2 py-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500'
-                        require =''
-                        value={expenseDate}
-                        onChange={(e) => setExpenseDate(e.target.value)}
+                </div>
+                <div className="relative">
+                    <DatePicker
+                        selected={expenseDate}
+                        onChange={(date) => setExpenseDate(date)}
+                        className="bg-slate-50 border border-slate-100 rounded-xl shadow-lg px-2 py-3 w-full block focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        wrapperClassName="datepicker-wrapper w-full"  // Apply custom class to the outer wrapper
+                        placeholderText="Enter a Date"
+                        dateFormat="MM/dd/yyyy"
                     />
                 </div>
                 <div className='bg-indigo-500 border rounded-full shadow-lg p-4 flex justify-center items-center gap-3 text-xl'>
@@ -97,7 +95,7 @@ const ExpensePage = () => {
                     >
                         Add Expense
                     </button>
-                </div>
+                </div>                
             </form>
         </div>
         <div className='col-start-5 col-end-13 row-start-4 row-end-13 flex flex-col gap-y-5 p-3'>

@@ -5,6 +5,8 @@ import { BsChatFill } from "react-icons/bs";
 import { GoDotFill } from "react-icons/go";
 import { FaDollarSign } from "react-icons/fa";
 import { FaCalendar } from "react-icons/fa";
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 
 const IncomePage = () => {
     const { 
@@ -44,7 +46,7 @@ const IncomePage = () => {
                             name='category'
                             placeholder='Income Category'
                             className='bg-slate-50 border border-slate-100 rounded-xl shadow-lg px-2 py-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500'
-                            require =''
+                            required
                             value={incomeCategory}
                             onChange={(e) => setIncomeCategory(e.target.value)}
                             
@@ -58,7 +60,7 @@ const IncomePage = () => {
                             name='description'
                             placeholder='Income Description'
                             className='bg-slate-50 border border-slate-100 rounded-xl shadow-lg px-2 py-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500'
-                            require =''
+                            required
                             value={incomeDescription}
                             onChange={(e) => setIncomeDescription(e.target.value)}
                         />
@@ -71,22 +73,19 @@ const IncomePage = () => {
                             name='amount'
                             placeholder='Income Amount'
                             className='bg-slate-50 border border-slate-100 rounded-xl shadow-lg px-2 py-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500'
-                            require =''
+                            required
                             value={incomeAmount}
                             onChange={(e) => setIncomeAmount(e.target.value)}
                         />
-                        </div>
-                    <div>
-                        <label htmlFor='date' className='block'></label>
-                        <input 
-                            type="text"
-                            id='date'
-                            name='date' 
-                            placeholder='MM/DD/YYYY'
-                            className='bg-slate-50 border border-slate-100 rounded-xl shadow-lg px-2 py-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500'
-                            require =''
-                            value={incomeDate}
-                            onChange={(e) => setIncomeDate(e.target.value)}
+                    </div>
+                    <div className="relative">
+                        <DatePicker
+                            selected={incomeDate}
+                            onChange={(date) => setIncomeDate(date)}
+                            className="bg-slate-50 border border-slate-100 rounded-xl shadow-lg px-2 py-3 w-full block focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            wrapperClassName="datepicker-wrapper w-full"  // Apply custom class to the outer wrapper
+                            placeholderText="Enter a Date"
+                            dateFormat="MM/dd/yyyy"
                         />
                     </div>
                     <div className='bg-indigo-500 border rounded-full shadow-lg p-4 flex justify-center items-center gap-3 text-xl w-2/3'>
