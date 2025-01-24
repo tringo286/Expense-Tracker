@@ -17,7 +17,12 @@ const userSchema = mongoose.Schema({
     refreshToken: { 
         type: String 
     },
-});
+    role: {
+        type: String,
+        enum: ['user', 'admin'],
+        default: 'user',
+    },     
+}, { timestamps: true });
 
 userSchema.statics.login = async function(email, password) {
     const user = await this.findOne({ email });

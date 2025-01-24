@@ -55,7 +55,8 @@ const handleLogin = async (req, res) => {
             user: {
                 fullName: foundUser.fullName,  
                 email: foundUser.email,
-                userId: foundUser._id
+                userId: foundUser._id,
+                role: user.role,
             },
             accessToken
         });             
