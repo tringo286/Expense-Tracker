@@ -44,7 +44,7 @@ const updateIncome = async (req, res) => {
 
     try {
         const updatedIncome = await Income.findByIdAndUpdate(id, income, { new: true });
-        res.status(200).json({ success: true, date: updatedIncome });
+        res.status(200).json({ success: true, data: updatedIncome });
     } catch (error) {
         console.error("Error in update income: ", error.message);
         res.status(500).json({ success: false, messagge: "Server Error"});

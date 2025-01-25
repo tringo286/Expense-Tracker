@@ -44,7 +44,7 @@ const updateExpense = async (req, res) => {
 
     try {
         const updatedExpense = await Expense.findByIdAndUpdate(id, expense, { new: true });
-        res.status(200).json({ success: true, date: updatedExpense });
+        res.status(200).json({ success: true, data: updatedExpense });
     } catch (error) {
         console.error("Error in update expense: ", error.message);
         res.status(500).json({ success: false, messagge: "Server Error"});
@@ -65,6 +65,6 @@ const deleteExpense = async (req, res) => {
         console.error("Error in delete expense: ", error.message);
         res.status(500).json({ success: false, message: "Server Error"})
     }
-}
+};
 
 module.exports = { getAllExpenses, createExpense, updateExpense, deleteExpense };
