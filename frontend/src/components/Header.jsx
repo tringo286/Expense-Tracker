@@ -34,14 +34,21 @@ const Header = () => {
           <div className='row-span-2 flex flex-row items-center gap-4 mb-4'>
             <img src={avatar} alt="User Avatar" className='w-14'/>            
             <div>
-              <p className='text-2xl text-indigo-500 font-semibold'>{user.fullName}</p>
+              <p className='text-2xl text-indigo-500 font-semibold'>{user.fullName.charAt(0).toUpperCase() + user.fullName.slice(1)}              
+              </p>
               {isAdmin && (
                 <p className='text-sm text-gray-700'>{userRole}</p>
               )}
             </div>
           </div>
           <div className='row-span-9 flex flex-col gap-6'>
-            <Link to='/' className={`inline-flex items-center gap-x-4 text-gray-600 font-semibold hover:text-indigo-700 ${isDashBoardPage ? 'text-lg font-bold text-indigo-500' : ''}`}><FaChartLine />Dashboard</Link>           
+            <Link 
+              to='/' 
+              className={`inline-flex items-center gap-x-4 text-gray-600 font-semibold hover:text-indigo-700 ${isDashBoardPage ? 'text-lg font-bold text-indigo-500' : ''}`}
+            >
+              <FaChartLine />
+              Dashboard
+            </Link>           
             <Link to='/incomes' className={`inline-flex items-center gap-x-4 text-gray-600 font-semibold hover:text-indigo-700 ${isIncomePage ? 'text-lg font-bold text-indigo-500' : ''}`}><FaMoneyBillTrendUp />Incomes</Link>  
             <Link to='/expenses' className={`inline-flex items-center gap-x-4 text-gray-600 font-semibold hover:text-indigo-700 ${isExpensePage ? 'text-lg font-bold text-indigo-500' : ''}`}><FaMoneyBillTransfer />Expenses</Link>   
             {isAdmin && (
