@@ -14,6 +14,8 @@ import Missing  from "./components/Missing";
 import Admin from './components/Admin'
 import IncomePage from './components/IncomePage';
 import ExpensePage from './components/ExpensePage';
+import Unauthorized from './components/Unauthorized'
+import RequireAdmin from './components/RequireAdmin';
 
 const App = () => {
     
@@ -37,13 +39,16 @@ const App = () => {
 
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth />}>                           
-              <Route path="/" element={<Layout><Dashboard /></Layout>} />    
-              <Route path="/admin" element={<Layout><Admin /></Layout>} />     
+              <Route path="/" element={<Layout><Dashboard /></Layout>} />   
+              <Route element={<RequireAdmin />}>  
+                <Route path="/admin" element={<Layout><Admin /></Layout>} /> 
+              </Route>
               <Route path="/incomes" element={<Layout><IncomePage /></Layout>} />
               <Route path="/expenses" element={<Layout><ExpensePage /></Layout>} /> 
           </Route>
         </Route>
         
+        <Route path="/unauthorized" element={<Unauthorized />} />
         <Route path="*" element={<Missing />} />
       </Routes>
     </>
