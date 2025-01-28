@@ -15,33 +15,54 @@ ChartJS.register(
 const Chart = () => {
     const { incomes, expenses } = useDataProvider();
 
+    const allDates = [
+        ...incomes.map(income => new Date(income.incomeDate).toLocaleDateString('en-US')),
+        ...expenses.map(expense => new Date(expense.expenseDate).toLocaleDateString('en-US'))
+    ];
+    
+    const uniqueDates = [...new Set(allDates)].sort((a, b) => new Date(a) - new Date(b));
+
+    const incomeData = uniqueDates.map(date => {
+        const income = incomes.find(income => new Date(income.incomeDate).toLocaleDateString('en-US') === date);
+        return income ? income.incomeAmount : 0;
+    });
+
+    const expenseData = uniqueDates.map(date => {
+        const expense = expenses.find(expense => new Date(expense.expenseDate).toLocaleDateString('en-US') === date);
+        return expense ? expense.expenseAmount : 0;
+    });
+
     const data = {
-        labels: incomes.map(income => {
-            const date = new Date(income.incomeDate);
-            return date.toLocaleDateString('en-US');  // mm/dd/yyyy
-        }),
+        labels: uniqueDates,
         datasets: [
             {
                 label: 'Income',
-                data: [
-                    ...incomes.map(income => {
-                        return income.incomeAmount;
-                    })
-                ],
-                backgroundColor: 'green',
-                tension: .2,
+                data: incomeData,
+                backgroundColor: '#84cc16',  
+                borderColor: '#84cc16',      
+                pointBackgroundColor: '#65a30d',  
+                pointBorderColor: '#65a30d',      
+                tension: 0.2,
+                cubicInterpolationMode: 'monotone',
+                pointRadius: (context) => {                    
+                    return context.raw !== 0 ? 3 : 0;  
+                },
             },
             {
                 label: 'Expenses',
-                data: [
-                    ...expenses.map(expense => {
-                        return expense.expenseAmount;
-                    })
-                ],
-                backgroundColor: 'red',
-                tension: .2,
+                data: expenseData,
+                backgroundColor: '#ef4444',  
+                borderColor: '#ef4444',      
+                pointBackgroundColor: '#dc2626',  
+                pointBorderColor: '#dc2626',      
+                tension: 0.2,
+                cubicInterpolationMode: 'monotone',
+                pointRadius: (context) => {                    
+                    return context.raw !== 0 ? 3 : 0;  
+                },
             }
-        ]
+            
+        ]   
     };
 
     return (
