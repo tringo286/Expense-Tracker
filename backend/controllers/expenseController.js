@@ -16,7 +16,7 @@ const getAllExpenses = async (req, res) => {
 const createExpense = async (req, res) => {    
     const expense = req.body;
     
-    if (!expense.expenseCategory || !expense.expenseDescription || !expense.expenseAmount || !expense.expenseDate) {
+    if (!expense.expenseCategory || !expense.expenseAmount || !expense.expenseDate) {
         return res.status(400).json({
             success: false,
             message: "Missing required fields"

@@ -16,7 +16,7 @@ const getAllIncomes = async (req, res) => {
 const createIncome = async (req, res) => {   
     const income = req.body;
     
-    if (!income.incomeCategory || !income.incomeDescription || !income.incomeAmount || !income.incomeDate) {
+    if (!income.incomeCategory || !income.incomeAmount || !income.incomeDate) {
         return res.status(400).json({
             success: false,
             message: "Missing required fields"
