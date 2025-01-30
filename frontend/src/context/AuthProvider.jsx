@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from '../api/axios';
+import { toast } from 'react-toastify'
 
 const AuthContext = createContext();
 
@@ -14,11 +15,14 @@ const AuthProvider = ({ children }) => {
     const [passwordError, setPasswordError] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [confirmPasswordError, setConfirmPasswordError] = useState('');    
+    const [confirmPasswordError, setConfirmPasswordError] = useState('');  
+    const [role, setRole] = useState('');  
+    const [users, setUsers] = useState([]);  
+    const [isEditFormOpen, setIsEditFormOpen] = useState(false);
 
     const navigate = useNavigate();
     const location = useLocation();
-    const from = location.state?.from?.pathname || "/";  
+    const from = location.state?.from?.pathname || "/dashboard";     
 
     useEffect(() => {
         setEmailError('');
@@ -33,6 +37,10 @@ const AuthProvider = ({ children }) => {
       setConfirmPassword('');
     }, [location]);
 
+    useEffect(() => {
+      fetchUsers(); 
+    }, [])
+
     const handleLoginSubmit = async (event) => {
         event.preventDefault();
       
@@ -40,7 +48,7 @@ const AuthProvider = ({ children }) => {
           const res = await axios.post('/login', {
             email,
             password
-          }, {
+          }, {  
             headers: {
               "Content-Type": "application/json"
             },
@@ -109,16 +117,63 @@ const AuthProvider = ({ children }) => {
     const toggleConfirmPasswordVisibility = () => {
       setShowConfirmPassword(!showConfirmPassword);
     };
+
+    const fetchUsers = async () => {
+        try {            
+            const response = await axios.get('/users');
+            const fetchedUsers = response.data.data;                              
+            setUsers(fetchedUsers); 
+        } catch (error) {
+            console.error("An error occurred while getting users:", error.message);
+        }
+    }; 
+    
+    const handleUpdateUserSubmit = (e, userId) => {
+      e.preventDefault();
+      
+      const updatedUser = {           
+          fullName,
+          email,
+          role,    
+      };
+      updateUser(userId, updatedUser);
+      setIsEditFormOpen(false); // Close the update user form after sucessfully updating
+      setFullName('');
+      setEmail('');
+      setRole('');      
+      toast.success('User Updated Successfully')
+    };
+
+    const updateUser = async (userId, updatedUser) => {
+        try {            
+            await axios.put(`/user/${userId}`, updatedUser);
+            fetchUsers();                       
+        } catch (error) {            
+            console.error("There was an error updating the user", error);
+        }
+    };
+
+    const deleteUser = async (id) => {
+        try {
+            await axios.delete(`/user/${id}`); 
+            fetchUsers();         
+            toast.success('User Deleted Successfully')             
+        } catch (error) {            
+            console.error("There was an error deleting the user", error);
+        }
+    };
     
     return (
         <AuthContext.Provider value={{ 
-                auth, setAuth, fullName, setFullName,
-                email, setEmail, emailError, setEmailError,
-                password, setPassword, passwordError, setPasswordError, 
-                handleLoginSubmit, handleSignupSubmit,
-                confirmPassword, setConfirmPassword, confirmPasswordError, setConfirmPasswordError,
-                togglePasswordVisibility, showPassword,
-                toggleConfirmPasswordVisibility, showConfirmPassword,   
+          auth, setAuth, fullName, setFullName,
+          email, setEmail, emailError, setEmailError,
+          password, setPassword, passwordError, setPasswordError, 
+          handleLoginSubmit, handleSignupSubmit,
+          confirmPassword, setConfirmPassword, confirmPasswordError, setConfirmPasswordError,
+          togglePasswordVisibility, showPassword,
+          toggleConfirmPasswordVisibility, showConfirmPassword,  
+          users, fetchUsers, role, setRole, deleteUser, handleUpdateUserSubmit,
+          isEditFormOpen, setIsEditFormOpen
         }}>
             {children}
         </AuthContext.Provider>
