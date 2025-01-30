@@ -3,7 +3,6 @@ import axios from "../api/axios";
 import { toast } from 'react-toastify'
 import { useLocation } from "react-router-dom";
 
-
 const DataContext = createContext();
 
 const DataProvider = ({ children }) => {
@@ -21,8 +20,8 @@ const DataProvider = ({ children }) => {
     const [expenseCategory, setExpenseCategory] = useState('');
     const [expenseDescription, setExpenseDescription] = useState('');
     const [expenseDate, setExpenseDate] = useState('');
-    const [expenseAmount, setExpenseAmount] = useState(''); 
-    
+    const [expenseAmount, setExpenseAmount] = useState('');         
+        
     const totalBalance = totalIncomes - totalExpenses    
         
     const user = JSON.parse(localStorage.getItem('user'));
@@ -32,7 +31,7 @@ const DataProvider = ({ children }) => {
     
     useEffect(() => {        
         fetchExpenses(currentUserId);  
-        fetchIncomes(currentUserId);         
+        fetchIncomes(currentUserId);                    
     }, [location]);     
     
     useEffect(() => {        
@@ -64,7 +63,7 @@ const DataProvider = ({ children }) => {
             console.error("An error occurred while getting incomes:", error.message);
         }
     };    
-
+    
     const handleTotalExpense = () => {
         const total = expenses.reduce((total, expense) => total + expense.expenseAmount, 0);
         setTotalExpenses(total);
@@ -165,7 +164,7 @@ const DataProvider = ({ children }) => {
         try {
             await axios.delete(`/expense/${id}`); 
             fetchExpenses();   
-            toast.success('Expesne Deleted Successfully')             
+            toast.success('Expense Deleted Successfully')             
         } catch (error) {            
             console.error("There was an error deleting the expense", error);
         }
@@ -179,9 +178,8 @@ const DataProvider = ({ children }) => {
             incomeAmount, setIncomeAmount, handleIncomeSubmit, deleteIncome, 
 
             expenseCategory, setExpenseCategory, expenseDescription, setExpenseDescription, expenseDate, setExpenseDate,
-            expenseAmount, setExpenseAmount, handleExpenseSubmit, deleteExpense,
-            
-            incomes, expenses
+            expenseAmount, setExpenseAmount, handleExpenseSubmit, deleteExpense,            
+            incomes, expenses, fetchIncomes, fetchExpenses       
         }}>
             {children}
         </DataContext.Provider>
