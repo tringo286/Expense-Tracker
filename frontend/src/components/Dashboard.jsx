@@ -72,7 +72,7 @@ const Dashboard = () => {
             <div className="col-start-8 col-end-13 row-start-9 row-end-11 flex flex-col justify-around ">                
                 <div className="flex justify-between items-center px-3 text-indigo-500">
                     <p>Min</p>
-                    <h3 className="text-xl font-semibold">Epxense</h3>
+                    <h3 className="text-xl font-semibold">Expense</h3>
                     <p>Max</p>
                 </div>
                 <div className="p-3">
