@@ -5,9 +5,9 @@ const LandingPage = () => {
     return (
       <section className="h-screen w-screen flex flex-col items-center justify-between" style={{ backgroundImage: 'url(/bg.png)'}}>
             <Header/>
-            <div className="flex flex-col items-center gap-1">
+            <div className="flex flex-col items-center">
                 <h1 className="text-4xl font-bold text-gray-700">Manage Your Expense</h1>
-                <h1 className="text-4xl font-bold text-indigo-600">Control Your Money</h1>
+                <h1 className="text-4xl font-bold text-indigo-600 mb-3  ">Control Your Money</h1>
                 <h2 className="text-lg font-semibold text-gray-700">Start Creating Your Budget and Save a Ton of Money</h2>
                 <Link 
                     to="/login" 
