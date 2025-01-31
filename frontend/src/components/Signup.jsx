@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from '../hooks/useAuth';
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaArrowLeft } from "react-icons/fa";
 
 const Signup = () => {  
   const {
@@ -22,6 +22,11 @@ const Signup = () => {
     toggleConfirmPasswordVisibility,
   } = useAuth();  
 
+  const navigate = useNavigate();
+  const handleGoBack = () => {
+    navigate(-1); 
+  }
+
   return (
     <section className="h-screen w-screen grid grid-cols-12">
       <div className="relative col-span-6">
@@ -36,6 +41,16 @@ const Signup = () => {
       </div>
       <div className="col-span-6 flex justify-center items-center bg-gray-50">
         <div className="bg-white p-12 border-none rounded-xl shadow-xl">
+          <div className="flex justify-between items-center mb-4">
+            <button 
+              onClick={handleGoBack} 
+              className="p-2 rounded-full text-indigo-600 hover:bg-indigo-100"
+              aria-label="Go Back"
+            >
+              <FaArrowLeft size={20} />
+            </button>
+            <div></div>
+          </div>
           <h2 className="text-2xl font-bold mb-2 text-indigo-600">Sign Up</h2>
           <p className="text-gray-500 mb-8">to continue to Expense Tracker</p>
           <form onSubmit={handleSignupSubmit}>
