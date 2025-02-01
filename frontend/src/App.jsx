@@ -6,7 +6,7 @@ import RequireAuth from './components/RequireAuth';
 import PersistLogin from "./components/PersistLogin"; 
 import { DataProvider } from './context/DataProvider';
 
-import Header from './components/Header';
+import SideBar from './components/SideBar';
 import Signup from "./components/Signup";
 import Login from "./components/Login";''
 import Dashboard from './components/Dashboard'
@@ -16,13 +16,14 @@ import IncomePage from './components/IncomePage';
 import ExpensePage from './components/ExpensePage';
 import Unauthorized from './components/Unauthorized'
 import RequireAdmin from './components/RequireAdmin';
+import LandingPage from './components/LandingPage';
 
 const App = () => {
     
   const Layout = ({ children }) => (
     <div className='grid grid-cols-12 h-screen' style={{ backgroundImage: 'url(/bg.png)'}}>
       <DataProvider>
-        <Header />
+        <SideBar />
         <main className='col-span-9 py-10 pr-10'>
           {children}
           <ToastContainer />
@@ -39,7 +40,7 @@ const App = () => {
 
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth />}>                           
-              <Route path="/" element={<Layout><Dashboard /></Layout>} />   
+              <Route path="/dashboard" element={<Layout><Dashboard /></Layout>} />   
               <Route element={<RequireAdmin />}>  
                 <Route path="/admin" element={<Layout><Admin /></Layout>} /> 
               </Route>
@@ -48,7 +49,8 @@ const App = () => {
           </Route>
         </Route>
         
-        <Route path="/unauthorized" element={<Unauthorized />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/unauthorized" element={<Missing />} />
         <Route path="*" element={<Missing />} />
       </Routes>
     </>
