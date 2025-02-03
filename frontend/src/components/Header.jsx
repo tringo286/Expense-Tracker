@@ -13,7 +13,13 @@ const Header = () => {
             />
             <h1 className="text-indigo-600 font-bold text-2xl">Expense Tracker</h1>
           </Link> 
-        <div className="flex gap-5 mr-30 w-56">
+        <div className="flex gap-5 mr-30 w-96 justify-center">
+            <Link 
+              to="/dashboard" 
+              className="px-4 bg-indigo-600 rounded-md py-2 text-white font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 block text-center"
+            >
+              Dash Board
+            </Link>
             <Link 
               to="/login" 
               className="w-20 bg-indigo-600 rounded-md py-2 text-white font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 block text-center"
