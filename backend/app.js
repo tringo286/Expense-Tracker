@@ -6,6 +6,7 @@ const { connectDB } = require("./db")
 const expenses = require('./routes/expenseRoutes')
 const incomes = require('./routes/incomeRoutes')
 const user = require('./routes/userRoutes')
+const auth = require('./routes/authRoutes')
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(cors({
   credentials: true,  // Allow sending cookies
 }));
 
+app.use('/', auth);
 app.use('/', user);
 app.use('/', expenses);
 app.use('/', incomes);
