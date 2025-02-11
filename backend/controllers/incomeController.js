@@ -22,7 +22,14 @@ const createIncome = async (req, res) => {
             message: "Missing required fields"
         });
     }   
-    
+
+    if (isNaN(income.incomeAmount)) {
+        return res.status(400).json({
+            success: false,
+            message: "Amount must be a number"
+        });
+    }
+
     const newIncome = new Income(income);
 
     try {
@@ -32,7 +39,7 @@ const createIncome = async (req, res) => {
         console.error("Error in create income: ", error.message);
         res.status(500).json({success: false, message: "Server Error"})
     }   
-}
+};
 
 const updateIncome = async (req, res) => {
     const { id } = req.params;
