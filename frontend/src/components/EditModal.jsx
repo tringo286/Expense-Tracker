@@ -6,16 +6,21 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "../api/axios";
 import useIncomeProvider from "../hooks/useIncomeProvider";
+import useDataProvider from "../hooks/useDataProvider";
 
-const EditModal = ({ title, income, fetchIncomes }) => {
+const EditModal = ({ title, income }) => {
+    const {         
+        fetchIncomes
+    } = useDataProvider();
+
     const { 
         editIncomeCategory, setEditIncomeCategory,
         editIncomeDescription, setEditIncomeDescription,
         editIncomeAmount, setEditIncomeAmount,
         editIncomeDate, setEditIncomeDate,
         toggleEditIncomeForm,
-        setIsEditIncomeFormOpen
-    } = useIncomeProvider();
+        setIsEditIncomeFormOpen        
+    } = useIncomeProvider();    
 
     const DatePickerCustomInput = forwardRef(
         ({ value, onClick, className }, ref) => (

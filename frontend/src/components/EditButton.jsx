@@ -1,9 +1,12 @@
 import { MdEdit } from "react-icons/md";
+import useIncomeProvider from "../hooks/useIncomeProvider";
 
-const EditButton = ({ toggleModal, label }) => {
+const EditButton = ({ label }) => {
+  const { toggleEditIncomeForm } = useIncomeProvider();
+  
   return (
     <button 
-        onClick={() => toggleModal(label)} 
+        onClick={() => toggleEditIncomeForm(label)} 
         className="flex justify-center items-center w-10 h-10 border rounded-xl bg-indigo-500"><MdEdit className="text-white"/>
     </button>   
   )

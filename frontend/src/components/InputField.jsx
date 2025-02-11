@@ -1,11 +1,11 @@
 
 const InputField = ({
     type='text', 
-    name, 
-    id, 
+    name,     
     value='', 
     onChange,     
     placeholder='',
+    className='bg-slate-50 border border-slate-100 rounded-xl shadow-lg px-2 py-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500',
     required= true,
     error=null, 
     }) =>   (
@@ -16,7 +16,7 @@ const InputField = ({
             id={name}
             name={name}
             placeholder={placeholder}
-            className='bg-slate-50 border border-slate-100 rounded-xl shadow-lg px-2 py-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500'
+            className={className}
             required={required}
             value={value}
             onChange={(e) => onChange(e.target.value)}                             
