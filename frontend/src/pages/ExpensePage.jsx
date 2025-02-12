@@ -4,9 +4,9 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import axios from '../api/axios';
 import { toast } from 'react-toastify'
-import InputField from '../components/InputField';
+import InputField from '../components/InputFields/InputField';
 import { useState, useEffect, forwardRef } from 'react';
-import TransactionCard from '../components/TransactionCard';
+import TransactionCard from '../components/Cards/TransactionCard';
 import EditModal from '../components/EditModal';
 
 const ExpensePage = () => {
@@ -118,13 +118,14 @@ const ExpensePage = () => {
                         name="description"                            
                         value={expenseDescription}
                         onChange={setExpenseDescription}
-                        placeholder='Expense Title'                            
+                        placeholder='Expense Title'       
+                        required={false}                     
                     />
                     <InputField 
                         name="amount"                            
                         value={expenseAmount}
                         onChange={setExpenseAmount}
-                        placeholder='Income Amount'
+                        placeholder='Income Amount'                        
                         error={expenseAmountError}             
                     />                  
                     <div className="w-full">
@@ -148,7 +149,7 @@ const ExpensePage = () => {
             <div className='col-start-5 col-end-13 row-start-4 row-end-13 flex flex-col gap-y-5 p-3 overflow-y-auto'>
                 {loading ? (
                     <div className="absolute inset-0 flex justify-center items-center bg-gray-50 bg-opacity-50 z-10">
-                        <div className="w-16 h-16 border-4 border-t-4 border-indigo-500 border-solid rounded-full animate-spin"></div>
+                        <div className="spinner"></div>
                     </div>
                 ) : expenses.length > 0 ? (
                     expenses.map(expense => (

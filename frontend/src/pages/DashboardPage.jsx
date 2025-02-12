@@ -1,8 +1,8 @@
 import useDataProvider from "../hooks/useDataProvider";
 import Chart from "../components/Chart";
-import TotalAmountCard from "../components/TotalAmountCard";
-import MinMaxAmountCard from "../components/MinMaxAmountCard"
-import HistoryCard from "../components/HistoryCard";
+import TotalAmountCard from "../components/Cards/TotalAmountCard";
+import MinMaxAmountCard from "../components/Cards/MinMaxAmountCard"
+import HistoryCard from "../components/Cards/HistoryCard";
 
 const Dashboard = () => {
     const { totalExpenses, totalIncomes, totalBalance, transactions, incomes, expenses} = useDataProvider();

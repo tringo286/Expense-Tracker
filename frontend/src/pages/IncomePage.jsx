@@ -3,8 +3,8 @@ import { FaPlus} from "react-icons/fa";
 import { toast } from 'react-toastify';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import InputField from '../components/InputField';
-import TransactionCard from '../components/TransactionCard';
+import InputField from '../components/InputFields/InputField';
+import TransactionCard from '../components/Cards/TransactionCard';
 import EditModal from '../components/EditModal';
 import useDataProvider from '../hooks/useDataProvider';
 import axios from '../api/axios';
@@ -152,7 +152,7 @@ const IncomePage = () => {
             <div className='col-start-5 col-end-13 row-start-4 row-end-13 flex flex-col gap-y-5 p-3 overflow-y-auto'>
                 {loading ? (
                     <div className="absolute inset-0 flex justify-center items-center bg-gray-50 bg-opacity-50 z-10">
-                        <div className="w-16 h-16 border-4 border-t-4 border-indigo-500 border-solid rounded-full animate-spin"></div>
+                        <div className="spinner"></div>
                     </div>
                 ) : incomes.length > 0 ? (
                     incomes.map(income => (
