@@ -18,7 +18,7 @@ dotenv.config({ path: '../.env' });
 const PORT = process.env.PORT || 5000;
 
 app.use(cors({
-  origin: 'https://lustrous-concha-b5b495.netlify.app', // Frontend URL
+  origin: 'https://spendings-tracker-app.netlify.app', // Frontend URL
   credentials: true,  // Allow sending cookies
 }));
 
