@@ -1,38 +1,36 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "../api/axios";
 import { toast } from 'react-toastify'
-import { useLocation } from "react-router-dom";
 
 const DataContext = createContext();
 
-const DataProvider = ({ children }) => {
+const DataProvider = ({ children }) => { 
     const [expenses, setExpenses] = useState([]);
     const [totalExpenses, setTotalExpenses] = useState('');
     const [incomes, setIncomes] = useState([]); 
     const [totalIncomes, setTotalIncomes] = useState('');
-    const [transactions, setTransactions] = useState([]);
-
-    const [incomeCategory, setIncomeCategory] = useState('');
-    const [incomeDescription, setIncomeDescription] = useState('');
-    const [incomeDate, setIncomeDate] = useState('');
-    const [incomeAmount, setIncomeAmount] = useState(''); 
-
+    const [transactions, setTransactions] = useState([]);  
     const [expenseCategory, setExpenseCategory] = useState('');
     const [expenseDescription, setExpenseDescription] = useState('');
     const [expenseDate, setExpenseDate] = useState('');
-    const [expenseAmount, setExpenseAmount] = useState('');         
+    const [expenseAmount, setExpenseAmount] = useState('');     
+    
+    const [editCategory, setEditCategory] = useState('');
+    const [editDescription, setEditDescription] = useState('');
+    const [editAmount, setEditAmount] = useState('');
+    const [editDate, setEditDate] = useState(new Date());
+
+    const [loading, setLoading] = useState(false);
         
     const totalBalance = totalIncomes - totalExpenses    
         
     const user = JSON.parse(localStorage.getItem('user'));
-    const currentUserId = user.userId;
-
-    const location = useLocation();
+    const currentUserId = user.userId; 
     
     useEffect(() => {        
         fetchExpenses(currentUserId);  
         fetchIncomes(currentUserId);                    
-    }, [location]);     
+    }, []);     
     
     useEffect(() => {        
         handleTotalExpense();
@@ -41,25 +39,31 @@ const DataProvider = ({ children }) => {
     }, [expenses, incomes]);    
 
     const fetchExpenses = async (currentUserId) => {
+        setLoading(true);
         try {
             const response = await axios.get('/expenses', {
                 params: { currentUserId }
             });
             const fetchedExpenses = response.data.data;            
-            setExpenses(fetchedExpenses);            
+            setExpenses(fetchedExpenses);     
+            setLoading(false);         
         } catch (error) {
+            setLoading(false);  
             console.error("An error occurred while getting total expenses:", error.message);
         }
     };  
 
     const fetchIncomes = async (currentUserId) => {
+        setLoading(true);
         try {            
             const response = await axios.get('/incomes', {
                 params: { currentUserId }
             });
             const fetchedIncomes = response.data.data;                       
             setIncomes(fetchedIncomes); 
+            setLoading(false);  
         } catch (error) {
+            setLoading(false);      
             console.error("An error occurred while getting incomes:", error.message);
         }
     };    
@@ -94,44 +98,7 @@ const DataProvider = ({ children }) => {
             }))
         ];         
         setTransactions(combinedTransactions);
-    };    
-
-    const handleIncomeSubmit = (e) => {
-        e.preventDefault();
-        
-        const newIncome = {
-            userId: currentUserId,
-            incomeCategory,
-            incomeDescription,
-            incomeAmount,
-            incomeDate,
-        };
-        addIncome(newIncome);
-        setIncomeCategory('');
-        setIncomeDescription('');
-        setIncomeAmount('');
-        setIncomeDate('');
-        toast.success('Income Added Successfully')
-    };
-
-    const addIncome = async (income) => {
-        try {
-            await axios.post('/income', income);
-            fetchIncomes();              
-        } catch (error) {            
-            console.error("There was an error adding the income", error);
-        }
-    };
-
-    const deleteIncome = async (id) => {
-        try {
-            await axios.delete(`/income/${id}`); 
-            fetchIncomes();   
-            toast.success('Income Deleted Successfully')             
-        } catch (error) {            
-            console.error("There was an error deleting the income", error);
-        }
-    };
+    };        
 
     const handleExpenseSubmit = (e) => {
         e.preventDefault();
@@ -172,14 +139,18 @@ const DataProvider = ({ children }) => {
 
     return (
         <DataContext.Provider value={{
-            totalExpenses, totalIncomes, totalBalance, transactions,
-
-            incomeCategory, setIncomeCategory, incomeDescription, setIncomeDescription, incomeDate, setIncomeDate, 
-            incomeAmount, setIncomeAmount, handleIncomeSubmit, deleteIncome, 
+            totalExpenses, totalBalance, transactions,  
 
             expenseCategory, setExpenseCategory, expenseDescription, setExpenseDescription, expenseDate, setExpenseDate,
             expenseAmount, setExpenseAmount, handleExpenseSubmit, deleteExpense,            
-            incomes, expenses, fetchIncomes, fetchExpenses       
+
+            incomes, setIncomes, totalIncomes, setTotalIncomes,
+            expenses, fetchIncomes, fetchExpenses,
+            editCategory, setEditCategory,
+            editDescription, setEditDescription,
+            editAmount, setEditAmount,
+            editDate, setEditDate,
+            loading, setLoading
         }}>
             {children}
         </DataContext.Provider>
