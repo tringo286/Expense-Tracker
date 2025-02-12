@@ -1,28 +1,26 @@
 import { useState, useEffect, forwardRef } from 'react';
 import { FaPlus} from "react-icons/fa";
-import DatePicker from 'react-datepicker';
 import { toast } from 'react-toastify';
-import axios from '../api/axios';
+import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import InputField from '../components/InputField';
 import TransactionCard from '../components/TransactionCard';
 import EditModal from '../components/EditModal';
-import useIncomeProvider from '../hooks/useIncomeProvider';
 import useDataProvider from '../hooks/useDataProvider';
+import axios from '../api/axios';
 
 const IncomePage = () => {    
-    const {     
-        fetchIncomes,
+    const {           
         incomes,
-        totalIncomes         
-    } = useDataProvider();
+        totalIncomes,
+        fetchIncomes,
+        setEditCategory,
+        setEditDescription,
+        setEditAmount,
+        setEditDate,    
+        loading,
+    } = useDataProvider();    
 
-     const {         
-        toggleEditIncomeForm,
-        currentEditedIncome,        
-        isEditIncomeFormOpen,
-        setIsEditIncomeFormOpen,                
-     } = useIncomeProvider();
     const user = JSON.parse(localStorage.getItem('user'));
     const currentUserId = user.userId;
 
@@ -30,7 +28,12 @@ const IncomePage = () => {
     const [incomeDescription, setIncomeDescription] = useState('');
     const [incomeAmount, setIncomeAmount] = useState('');
     const [incomeAmountError, setIncomeAmountError] = useState('');
-    const [incomeDate, setIncomeDate] = useState(new Date());       
+    const [incomeDate, setIncomeDate] = useState(new Date());
+
+    const [currentEditedIncome, setCurrentEditedIncome] = useState(null);    
+    const [isEditIncomeFormOpen, setIsEditIncomeFormOpen] = useState(false);
+
+    
 
     // Sort incomes from newest to oldest
     incomes.sort((a, b) => new Date(b.incomeDate) - new Date(a.incomeDate)); 
@@ -73,6 +76,21 @@ const IncomePage = () => {
         }
     };
 
+    const toggleEditIncomeForm = (income) => {
+        setIsEditIncomeFormOpen(!isEditIncomeFormOpen);
+        if (income) {
+            setCurrentEditedIncome(income); // Set the income being edited
+            
+            // Populate the data of current income in the input fields
+            setEditCategory(income.incomeCategory);
+            setEditDescription(income.incomeDescription);
+            setEditAmount(income.incomeAmount);
+            setEditDate(income.incomeDate);
+        } else {
+            setCurrentEditedIncome(null); // Clear the current income when closing
+        }
+    };   
+
     const DatePickerCustomInput = forwardRef(
         ({ value, onClick, className }, ref) => (
           <button className={className} onClick={onClick} ref={ref} type="button">
@@ -82,7 +100,7 @@ const IncomePage = () => {
     );
     
     return (
-        <section className='bg-white h-[calc(100vh-80px)] w-full border rounded-3xl grid grid-cols-12 grid-rows-12 p-3'>           
+        <section className='bg-white h-[calc(100vh-80px)] w-full border rounded-3xl grid grid-cols-12 grid-rows-12 p-3'>     
             <div className='col-start-1 col-end-13 row-start-1 row-end-4 px-3 pt-3 flex flex-col justify-around'>
                 <h1 className="flex items-center text-3xl font-semibold text-indigo-500">Incomes</h1>
                 <div className='flex justify-center items-center gap-2 py-4 bg-slate-50 border border-slate-100 rounded-xl shadow-lg'>                    
@@ -132,8 +150,12 @@ const IncomePage = () => {
             </div>
             
             <div className='col-start-5 col-end-13 row-start-4 row-end-13 flex flex-col gap-y-5 p-3 overflow-y-auto'>
-                {incomes.length > 0 ? (
-                    incomes.map(income => (                 
+                {loading ? (
+                    <div className="absolute inset-0 flex justify-center items-center bg-gray-50 bg-opacity-50 z-10">
+                        <div className="w-16 h-16 border-4 border-t-4 border-indigo-500 border-solid rounded-full animate-spin"></div>
+                    </div>
+                ) : incomes.length > 0 ? (
+                    incomes.map(income => (
                         <TransactionCard 
                             key={income._id} 
                             label={income}
@@ -141,15 +163,24 @@ const IncomePage = () => {
                             labelDescription={income.incomeDescription}
                             labelAmount={income.incomeAmount}
                             labelDate={income.incomeDate}
-                            toggleModal={toggleEditIncomeForm}        
+                            toggleModal={toggleEditIncomeForm}
+                            fetchData={fetchIncomes}      
+                            dataType='income'  
                         />
-                    ))) : (
-                        <p className="text-center text-gray-500 text-xl">No incomes available.</p>
-                    )              
-                }                
+                    ))
+                ) : (
+                    <p className="text-center text-gray-500 text-xl">No incomes available.</p>
+                )}              
             </div>     
             {isEditIncomeFormOpen && (               
-                <EditModal title='Income' income={currentEditedIncome} toggleEditIncomeForm={toggleEditIncomeForm} setIsEditIncomeFormOpen={setIsEditIncomeFormOpen}/>
+                <EditModal 
+                    title='Income' 
+                    dataType='income' 
+                    fetchData={fetchIncomes} 
+                    toggleModal={toggleEditIncomeForm}    
+                    setIsModalOpen={setIsEditIncomeFormOpen}     
+                    currentEditData={currentEditedIncome}
+                />
             )}           
         </section>
     )

@@ -2,7 +2,7 @@ import useDataProvider from "../hooks/useDataProvider";
 import Chart from "../components/Chart";
 import TotalAmountCard from "../components/TotalAmountCard";
 import MinMaxAmountCard from "../components/MinMaxAmountCard"
-import TransactionCard from "../components/TransactionCard";
+import HistoryCard from "../components/HistoryCard";
 
 const Dashboard = () => {
     const { totalExpenses, totalIncomes, totalBalance, transactions, incomes, expenses} = useDataProvider();
@@ -49,7 +49,7 @@ const Dashboard = () => {
             <div className="col-start-8 col-end-13 row-start-3 row-end-7 flex flex-col gap-y-5 p-3">
                 {transactions.length > 0 ? (
                 transactions.slice(0, 3).map(transaction => (
-                    <TransactionCard key={transaction.id} transaction={transaction} />
+                    <HistoryCard key={transaction.id} transaction={transaction} />
                 ))
                 ) : (
                 <p className="text-center text-gray-500 text-lg">No transactions available.</p>

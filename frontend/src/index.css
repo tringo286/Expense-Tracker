@@ -2,10 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes spin {
+  to {
+      transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  border: 4px solid transparent;
+  border-top: 4px solid #6366F1; /* Indigo */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+}
+
 /* This targets the outermost wrapper div for DatePicker */
 .react-datepicker__portal,
 .react-datepicker__header,
 .react-datepicker__input-container,
+.react-datepicker-wrapper,
 .react-datepicker__month-dropdown-container {
   width: 100% !important;
 }

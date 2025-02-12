@@ -8,6 +8,7 @@ import { FaPlus } from "react-icons/fa";
 import axios from "../api/axios";
 import { useLocation } from "react-router-dom";
 import { toast } from 'react-toastify'
+import useDataProvider from '../hooks/useDataProvider';
 
 const Admin = () => {
   const {     
@@ -17,12 +18,16 @@ const Admin = () => {
     setEmail, 
     password, 
     setPassword,     
-   } = useAuth();       
+   } = useAuth();      
+  const {
+    loading,
+    setLoading
+  } = useDataProvider();
   const [role, setRole] = useState('');  
   const [users, setUsers] = useState([]);  
   const [isEditUserFormOpen, setIsEditUserFormOpen] = useState(false);  
   const [searchQuery, setSearchQuery] = useState('');  
-  const [searchResutls, setSearchResutls] = useState(users);
+  const [searchResults, setSearchResults] = useState(users);
   const [currentEditedUser, setCurrentEditedUser] = useState(null);
   const [originalUserData, setOriginalUserData] = useState({
     fullName: "",
@@ -84,14 +89,14 @@ const Admin = () => {
   
   const searchUser = (query) => {
     if(query.trim() === '') {
-      setSearchResutls(users);  
+      setSearchResults(users);  
     } else {
       const searchResults = users.filter(user =>        
         user.fullName.toLowerCase().includes(query.toLowerCase()) ||
         user.email.toLowerCase().includes(query.toLowerCase()) ||
         user.role.toLowerCase().includes(query.toLowerCase()) 
       );  
-      setSearchResutls(searchResults);  
+      setSearchResults(searchResults);  
     }
   };  
 
@@ -212,40 +217,49 @@ const Admin = () => {
                 <th className="w-3/12">Actions</th>
               </tr> 
             </thead>  
-            <tbody>        
-              {searchResutls.map((user, index) => (              
-                <tr
-                key={user._id}
-                className={`space-y-2 ${index % 2 === 1 ? 'bg-slate-50 shadow-md' : ''}`} // Apply gray background to even rows
-                >
-                  <td className='px-5'>{index + 1}</td>
-                  <td>{user.fullName.charAt(0).toUpperCase() + user.fullName.slice(1)}</td>
-                  <td>{user.email}</td>
-                  <td>{user.role.charAt(0).toUpperCase() + user.role.slice(1)}</td>
-                  <td>{new Date(user.createdAt).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'numeric',
-                      day: 'numeric'  
-                  })}
-                  </td>
-                  <td className='flex items-center pb-3 gap-5'>
-                    <button 
-                      className='flex justify-center items-center w-10 h-10 border rounded-xl bg-indigo-500' 
-                      onClick={() => toggleEditUserForm(user)}
-                      title={'Edit user'}
-                    >
-                      <MdEdit className='text-white'/>                    
-                    </button>
-                    <button 
-                      onClick={() => deleteUser(user._id)} 
-                      className='flex justify-center items-center w-10 h-10 border rounded-xl bg-indigo-500'
-                      title={'Delete user'}
-                    >
-                      <FaTrash className='text-white'/>                    
-                    </button>
-                  </td>                          
-                </tr>              
-              ))} 
+            <tbody> 
+              {loading ? ( 
+                <div className="absolute inset-0 flex justify-center items-center bg-gray-50 bg-opacity-50 z-10">
+                  <div className="spinner"></div>
+                </div> 
+              ) : (searchResults.length > 0 ? (
+                searchResults.map((user, index) => (              
+                  <tr
+                  key={user._id}
+                  className={`space-y-2 ${index % 2 === 1 ? 'bg-slate-50 shadow-md' : ''}`} // Apply gray background to even rows
+                  >
+                    <td className='px-5'>{index + 1}</td>
+                    <td>{user.fullName.charAt(0).toUpperCase() + user.fullName.slice(1)}</td>
+                    <td>{user.email}</td>
+                    <td>{user.role.charAt(0).toUpperCase() + user.role.slice(1)}</td>
+                    <td>{new Date(user.createdAt).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: 'numeric'  
+                    })}
+                    </td>
+                    <td className='flex items-center pb-3 gap-5'>
+                      <button 
+                        className='flex justify-center items-center w-10 h-10 border rounded-xl bg-indigo-500' 
+                        onClick={() => toggleEditUserForm(user)}
+                        title={'Edit user'}
+                      >
+                        <MdEdit className='text-white'/>                    
+                      </button>
+                      <button 
+                        onClick={() => deleteUser(user._id)} 
+                        className='flex justify-center items-center w-10 h-10 border rounded-xl bg-indigo-500'
+                        title={'Delete user'}
+                      >
+                        <FaTrash className='text-white'/>                    
+                      </button>
+                    </td>                          
+                  </tr>              
+                  ))) : (
+                    <tr>
+                      <td colSpan="6" className="text-center text-gray-500 text-xl py-4">No users available.</td>
+                    </tr>
+                  ))}
             </tbody>       
         </table>
         {isEditUserFormOpen && (
