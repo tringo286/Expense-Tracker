@@ -18,11 +18,11 @@ dotenv.config({ path: '../.env' });
 const PORT = process.env.PORT || 5000;
 
 app.use(cors({
-  origin: 'http://localhost:3000', // Frontend URL
+  origin: 'https://lustrous-concha-b5b495.netlify.app', // Frontend URL
   credentials: true,  // Allow sending cookies
 }));
 
-app.use('/', auth);
+app.use('/', auth)
 app.use('/', user);
 app.use('/', expenses);
 app.use('/', incomes);
