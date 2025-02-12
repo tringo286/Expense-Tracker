@@ -23,6 +23,13 @@ const createExpense = async (req, res) => {
         });
     }   
 
+    if (isNaN(expense.expenseAmount)) {
+        return res.status(400).json({
+            success: false,
+            message: "Amount must be a number"
+        });
+    }
+
     const newExpense = new Expense(expense);
 
     try {
