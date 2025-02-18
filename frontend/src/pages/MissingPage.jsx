@@ -15,7 +15,7 @@ const Missing = () => {
             <Header />            
             <Link 
                 to="/" 
-                className="absolute top-[680px] w-60 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-indigo-600 text-lg  bg-white rounded-md py-2 font-semibold hover:text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 mt-5 block text-center"
+                className="absolute top-[600px] sm:top-[680px] w-60 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-indigo-600 text-lg  bg-white rounded-md py-2 font-semibold hover:text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 mt-5 block text-center"
             >
                 Visit Our Homepage
             </Link>
