@@ -20,8 +20,7 @@ const Admin = () => {
     setPassword,     
    } = useAuth();      
   const {
-    loading,
-    setLoading
+    loading,    
   } = useDataProvider();
   const [role, setRole] = useState('');  
   const [users, setUsers] = useState([]);  
@@ -38,6 +37,10 @@ const Admin = () => {
   const [addUserErrors, setaddUserErrors] = useState('');
 
   const location = useLocation();
+
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 7;  // Number of users per page
 
   useEffect(() => {
     setaddUserErrors('');     
@@ -173,6 +176,13 @@ const Admin = () => {
       }
   };  
 
+  // Pagination Logic
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = searchResults.slice(indexOfFirstUser, indexOfLastUser);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <section className='bg-white h-[calc(100vh-80px)] w-full border rounded-3xl grid grid-cols-12 grid-rows-10 p-4'>      
       <div className="col-start-1 col-end-13 row-start-1 row-end-2 p-3">
@@ -205,7 +215,7 @@ const Admin = () => {
           </div>
         </div>
       </div>
-      <div className="col-start-1 col-end-13 row-start-2 row-end-11 table-auto px-3 overflow-y-auto">      
+      <div className="col-start-1 col-end-13 row-start-2 row-end-10 table-auto px-3 py-2 overflow-y-auto">      
         <table className="w-full">            
             <thead>
               <tr className="text-left bg-slate-200 text-indigo-500 position: sticky top-0">
@@ -219,16 +229,16 @@ const Admin = () => {
             </thead>  
             <tbody> 
               {loading ? ( 
-                <div className="absolute inset-0 flex justify-center items-center bg-gray-50 bg-opacity-50 z-10">
-                  <div className="spinner"></div>
-                </div> 
-              ) : (searchResults.length > 0 ? (
-                searchResults.map((user, index) => (              
+                <tr className="absolute inset-0 flex justify-center items-center bg-gray-50 bg-opacity-50 z-10">
+                  <td className="spinner"></td>
+                </tr> 
+              ) : (currentUsers.length > 0 ? (
+                currentUsers.map((user, index) => (              
                   <tr
                   key={user._id}
-                  className={`space-y-2 ${index % 2 === 1 ? 'bg-slate-50 shadow-md' : ''}`} // Apply gray background to even rows
+                  className={`space-y-3 ${index % 2 === 1 ? 'bg-slate-50 shadow-md' : ''}`} // Apply gray background to even rows
                   >
-                    <td className='px-5'>{index + 1}</td>
+                    <td className='px-5'>{indexOfFirstUser + index + 1}</td>
                     <td>{user.fullName.charAt(0).toUpperCase() + user.fullName.slice(1)}</td>
                     <td>{user.email}</td>
                     <td>{user.role.charAt(0).toUpperCase() + user.role.slice(1)}</td>
@@ -261,8 +271,41 @@ const Admin = () => {
                     </tr>
                   ))}
             </tbody>       
-        </table>
-        {isEditUserFormOpen && (
+        </table>              
+      </div>
+
+      {/* Pagination Controls */}
+      <div className="col-start-1 col-end-13 row-start-10 row-end-11 flex justify-center items-center">
+      <button 
+        className={`px-4 py-2 rounded-lg ${currentPage === 1 ? 'bg-indigo-300 text-gray-300' : 'bg-indigo-500 text-white'}`}
+        onClick={() => paginate(currentPage - 1)} 
+        disabled={currentPage === 1}
+      >
+        Prev
+      </button>
+
+        {/* Display page numbers dynamically */}
+        {Array.from({ length: Math.ceil(users.length / usersPerPage) }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => paginate(index + 1)}
+            className={`px-4 py-2 mx-1 rounded-lg ${currentPage === index + 1 ? 'bg-indigo-500 text-white' : 'bg-white text-indigo-500'} hover:bg-indigo-300`}
+          >
+            {index + 1}
+          </button>
+        ))} 
+
+        <button 
+          className={`px-4 py-2 rounded-lg ${currentPage * usersPerPage >= users.length ? 'bg-indigo-300 text-gray-300' : 'bg-indigo-500 text-white'}`}
+          onClick={() => paginate(currentPage + 1)} 
+          disabled={currentPage * usersPerPage >= users.length}
+        >
+          Next
+        </button>
+
+      </div>
+
+      {isEditUserFormOpen && (
           <>
             <div 
               className='fixed inset-0 bg-gray-500 opacity-70 z-10' 
@@ -377,8 +420,7 @@ const Admin = () => {
                       />
                     </div>
                     
-                    <div>
-                      {/* <label htmlFor="role" className="mb-2">Role</label> */}
+                    <div>                      
                       <select 
                         id="role" 
                         value={role} 
@@ -410,8 +452,7 @@ const Admin = () => {
               </div>
             </div>            
           </>
-        )}
-      </div>       
+        )}       
     </section>
   )
 }
