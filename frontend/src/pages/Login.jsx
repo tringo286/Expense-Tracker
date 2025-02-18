@@ -61,14 +61,14 @@ const Login = () => {
   };
 
   return (
-    <section className="h-screen w-screen grid grid-cols-12">
+    <section className="h-screen w-screen grid grid-cols-12 grid-rows-12">
       <AuthBackgroundSection bgImage="/auth-bg.avif" title="Welcome to Expense Tracker" description="Monitor your expenses, set budgets, and gain insights into your financial habits. Stay on top of your finances with ease and take control of your future."/>
-      <div className="col-span-6 flex justify-center items-center bg-gray-50">
-        <div className="bg-white p-12 border-none rounded-xl shadow-xl">     
+      <div className="col-span-full row-span-9 lg:col-span-6 lg:row-span-full flex justify-center items-center bg-gray-50">
+        <div className="bg-white p-10 sm:p-12 border-none rounded-xl shadow-xl">     
           <GoBackButton onGoBack={handleGoBack}/>     
           <h2 className="text-2xl font-bold mb-2 text-indigo-600">Log In</h2>
           <p className="text-gray-500 mb-8">to continue to Expense Tracker</p>
-          <form onSubmit={handleLoginSubmit} className="w-80">
+          <form onSubmit={handleLoginSubmit} className="w-64 sm:w-80">
             <label htmlFor="email"></label>              
             <AuthInputField
               type="email"

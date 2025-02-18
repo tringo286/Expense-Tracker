@@ -9,7 +9,7 @@ const AuthInputField = ({
     icon=null, 
     toggleVisibility=() => {},  
     }) => (
-    <div className="mb-5 w-80 relative">
+    <div className="mb-2 sm:mb-5 w-64 sm:w-80 relative">
       <input
         type={type}        
         name={name}
