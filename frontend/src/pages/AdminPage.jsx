@@ -300,14 +300,17 @@ const Admin = () => {
 
                     <div>
                       <label htmlFor="role"></label>
-                      <input 
+                      <select 
                         type="text" 
                         id='role' 
                         value={role}
                         onChange={(e) => setRole(e.target.value)} 
                         className='mb-10 border-b-2 p-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:rounded-sm'
                         placeholder='Enter a new role'                    
-                      />
+                      >
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                      </select>
                     </div>
                     
                     <button 
