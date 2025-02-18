@@ -18,11 +18,11 @@ dotenv.config({ path: '../.env' });
 const PORT = process.env.PORT || 5000;
 
 app.use(cors({
-  origin: 'https://spendings-tracker-app.netlify.app', // Frontend URL
+  origin: 'http://localhost:3000', // Frontend URL
   credentials: true,  // Allow sending cookies
 }));
 
-app.use('/', auth)
+app.use('/', auth);
 app.use('/', user);
 app.use('/', expenses);
 app.use('/', incomes);

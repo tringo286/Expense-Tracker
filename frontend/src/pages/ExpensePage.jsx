@@ -118,7 +118,7 @@ const ExpensePage = () => {
                         name="description"                            
                         value={expenseDescription}
                         onChange={setExpenseDescription}
-                        placeholder='Expense Title'       
+                        placeholder='Expense Description (Optional)'       
                         required={false}                     
                     />
                     <InputField 

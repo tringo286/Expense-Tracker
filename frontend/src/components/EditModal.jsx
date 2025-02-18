@@ -74,7 +74,8 @@ const EditModal = ({ title, dataType, fetchData, toggleModal, setIsModalOpen, cu
                             value={editDescription}
                             onChange={setEditDescription}
                             placeholder={`Enter a new ${dataType} description`}         
-                            className='border-b-2 p-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:rounded-sm mb-7'                  
+                            className='border-b-2 p-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:rounded-sm mb-7'    
+                            required={false}              
                         />                
                         <InputField 
                             name="amount"                            

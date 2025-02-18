@@ -1,0 +1,6 @@
+Admin page: spit user by page like 10 users per page. Because if I have like 1000 users, it takes a while to load.
+
+Make description in update's form optional
+
+
+Change role in update user from input field to selection
