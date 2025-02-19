@@ -9,7 +9,7 @@ const InputField = ({
     required= true,
     error=null, 
     }) =>   (
-    <div>
+    <>
         <label htmlFor={name}></label>        
         <input 
             type={type}
@@ -26,7 +26,7 @@ const InputField = ({
           {error}
         </div>
       )}
-    </div>
+    </>
   );
 
 export default InputField;

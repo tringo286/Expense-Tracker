@@ -5,7 +5,7 @@ import { RiAdminFill } from "react-icons/ri";
 
 const NavLinks = ({ isDashBoardPage, isIncomePage, isExpensePage, isAdminPage, isAdmin }) => {
   return (
-    <div className='row-span-9 flex flex-col gap-6'>
+    <div className='flex justify-around lg:justify-start lg:flex-col gap-6'>
       <Link 
         to='/dashboard' 
         className={`inline-flex items-center gap-x-4 text-gray-600 font-semibold hover:text-indigo-700 ${isDashBoardPage ? 'text-lg font-bold text-indigo-500' : ''}`}
