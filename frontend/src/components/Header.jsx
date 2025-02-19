@@ -51,27 +51,27 @@ const Header = () => {
           </button>
 
           {isMenuOpen && (
-          <div className="absolute top-20 right-5 bg-white shadow-md p-4 w-48 rounded-md md:hidden">
-            <Link 
-              to="/dashboard" 
-              className="block px-4 py-2 text-indigo-600 hover:bg-indigo-100"
-            >
-              Dash Board
-            </Link>
-            <Link 
-              to="/login" 
-              className="block px-4 py-2 text-indigo-600 hover:bg-indigo-100"
-            >
-              Log In
-            </Link>
-            <Link 
-              to="/signup" 
-              className="block px-4 py-2 text-indigo-600 hover:bg-indigo-100"
-            >
-              Sign Up
-            </Link>
-          </div>
-        )}
+            <div className="absolute top-20 right-5 border border-indigo-100 bg-white shadow-md p-4 w-48 rounded-md md:hidden">
+              <Link 
+                to="/dashboard" 
+                className="block px-4 py-2 text-indigo-600 hover:bg-indigo-100"
+              >
+                Dash Board
+              </Link>
+              <Link 
+                to="/login" 
+                className="block px-4 py-2 text-indigo-600 hover:bg-indigo-100"
+              >
+                Log In
+              </Link>
+              <Link 
+                to="/signup" 
+                className="block px-4 py-2 text-indigo-600 hover:bg-indigo-100"
+              >
+                Sign Up
+              </Link>
+            </div>
+          )}
       </div>
     </header>   
   )
