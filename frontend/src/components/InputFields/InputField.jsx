@@ -5,7 +5,7 @@ const InputField = ({
     value='', 
     onChange,     
     placeholder='',
-    className='bg-slate-50 border border-slate-100 rounded-xl shadow-lg px-2 py-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500',
+    className='text-sm sm:text-base bg-slate-50 border border-slate-100 rounded-xl shadow-lg px-2 py-1 sm:py-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500',
     required= true,
     error=null, 
     }) =>   (

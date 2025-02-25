@@ -36,9 +36,9 @@ const Header = () => {
       <header className="col-span-full row-span-2 lg:col-span-3 lg:row-span-full p-4 lg:p-10">
         <div className='flex justify-between lg:justify-start lg:grid ld:grid-rows-12 bg-white h-full px-8 sm:px-20 sm:py-3 lg:p-6 border rounded-3xl'>
           <div className='lg:row-span-2 flex flex-row items-center gap-4 lg:mb-4'>
-            <img src={avatar} alt="User Avatar" className='w-14'/>            
+            <img src={avatar} alt="User Avatar" className='w-12 xl:w-14'/>            
             <div>
-              <p className='text-2xl text-indigo-500 font-semibold'>{user.fullName.charAt(0).toUpperCase() + user.fullName.slice(1)}              
+              <p className='text-lg xl:text-2xl text-indigo-500 font-semibold'>{user.fullName.charAt(0).toUpperCase() + user.fullName.slice(1)}              
               </p>
               {isAdmin && (
                 <p className='text-sm text-gray-700'>{userRole}</p>
@@ -69,7 +69,7 @@ const Header = () => {
           </button>
           
           {isMenuOpen && (
-            <div className="absolute top-24 right-24 bg-white border border-indigo-200 shadow-md p-4 w-48 rounded-md lg:hidden">
+            <div className="absolute top-24 right-16 bg-white border border-indigo-200 shadow-md p-4 w-48 rounded-md lg:hidden z-10">
               <Link 
                 to="/dashboard" 
                 className="block px-4 py-2 text-indigo-600 hover:bg-indigo-100"
@@ -77,16 +77,16 @@ const Header = () => {
                 Dash Board
               </Link>
               <Link 
-                to="/expenses" 
-                className="block px-4 py-2 text-indigo-600 hover:bg-indigo-100"
-              >
-                Expenses
-              </Link>
-              <Link 
                 to="/incomes" 
                 className="block px-4 py-2 text-indigo-600 hover:bg-indigo-100"
               >
                 Incomes
+              </Link>
+              <Link 
+                to="/expenses" 
+                className="block px-4 py-2 text-indigo-600 hover:bg-indigo-100"
+              >
+                Expense
               </Link>
               {isAdmin && (
                 <Link 
@@ -96,7 +96,7 @@ const Header = () => {
                 Admin
               </Link>
               )}
-              <button className='block px-4 py-2 text-indigo-600 hover:bg-indigo-100' onClick={signOut}>Log out</button>
+              <button className='block px-4 py-2 text-indigo-600 hover:bg-indigo-100' onClick={signOut}>Log out</button>              
             </div>
           )}
         </div>        
