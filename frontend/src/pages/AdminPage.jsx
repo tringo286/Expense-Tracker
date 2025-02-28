@@ -184,10 +184,10 @@ const Admin = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <section className='bg-white h-[calc(100vh-80px)] w-full border rounded-3xl grid grid-cols-12 grid-rows-10 p-4'>      
+    <section className='bg-white h-[calc(100vh-160px)] lg:h-[calc(100vh-80px)] w-full border rounded-3xl grid grid-cols-12 grid-rows-10 p-4'>      
       <div className="col-start-1 col-end-13 row-start-1 row-end-2 p-3">
         <div className='flex justify-between'>
-          <h2 className='flex items-center text-2xl font-semibold text-indigo-500'>User Management</h2>
+          <h2 className='flex items-center text-sm md:text-2xl font-semibold text-indigo-500'>User Management</h2>
           <div className='flex items-center gap-2'>
             <form>
               <label htmlFor="search"></label>
@@ -198,7 +198,7 @@ const Admin = () => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder='Search user by name, email or role'
-                  className='w-72 pl-8 py-1 border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:rounded-full placeholder:text-sm'
+                  className='w-40 md:w-72 pl-8 py-1 border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:rounded-full placeholder:text-sm'
                 />
                 <div className='absolute left-2'>
                   <CiSearch />
@@ -215,16 +215,16 @@ const Admin = () => {
           </div>
         </div>
       </div>
-      <div className="col-start-1 col-end-13 row-start-2 row-end-10 table-auto px-3 py-2 overflow-y-auto">      
+      <div className="col-start-1 col-end-13 row-start-2 row-end-10 table-auto px-3 py-2 overflow-y-auto overflow-x-auto">      
         <table className="w-full">            
             <thead>
               <tr className="text-left bg-slate-200 text-indigo-500 position: sticky top-0">
-                <th className="w-1/12 p-5">ID</th> 
-                <th className="w-2/12">Full name</th> 
-                <th className="w-3/12">Email</th> 
-                <th className="w-2/12">Role</th> 
-                <th className="w-2/12">Joined date</th>
-                <th className="w-3/12">Actions</th>
+                <th className="min-w-14 w-1/12 p-5 text-sm lg:text-base">ID</th> 
+                <th className="min-w-28 w-2/12 text-sm lg:text-base">Full name</th> 
+                <th className="min-w-44 w-3/12 text-sm lg:text-base">Email</th> 
+                <th className="min-w-20 w-2/12 text-sm lg:text-base">Role</th> 
+                <th className="min-w-28 w-2/12 text-sm lg:text-base">Joined date</th>
+                <th className="min-w-32 w-3/12 text-sm lg:text-base">Actions</th>
               </tr> 
             </thead>  
             <tbody> 
@@ -238,11 +238,11 @@ const Admin = () => {
                   key={user._id}
                   className={`space-y-3 ${index % 2 === 1 ? 'bg-slate-50 shadow-md' : ''}`} // Apply gray background to even rows
                   >
-                    <td className='px-5'>{indexOfFirstUser + index + 1}</td>
-                    <td>{user.fullName.charAt(0).toUpperCase() + user.fullName.slice(1)}</td>
-                    <td>{user.email}</td>
-                    <td>{user.role.charAt(0).toUpperCase() + user.role.slice(1)}</td>
-                    <td>{new Date(user.createdAt).toLocaleDateString('en-US', {
+                    <td className='pl-5'>{indexOfFirstUser + index + 1}</td>
+                    <td className='text-sm lg:text-base'>{user.fullName.charAt(0).toUpperCase() + user.fullName.slice(1)}</td>
+                    <td className='text-sm lg:text-base'>{user.email}</td>
+                    <td className='text-sm lg:text-base'>{user.role.charAt(0).toUpperCase() + user.role.slice(1)}</td>
+                    <td className='text-sm lg:text-base'>{new Date(user.createdAt).toLocaleDateString('en-US', {
                         year: 'numeric',
                         month: 'numeric',
                         day: 'numeric'  
@@ -276,13 +276,13 @@ const Admin = () => {
 
       {/* Pagination Controls */}
       <div className="col-start-1 col-end-13 row-start-10 row-end-11 flex justify-center items-center">
-      <button 
-        className={`px-4 py-2 rounded-lg ${currentPage === 1 ? 'bg-indigo-300 text-gray-300' : 'bg-indigo-500 text-white'}`}
-        onClick={() => paginate(currentPage - 1)} 
-        disabled={currentPage === 1}
-      >
-        Prev
-      </button>
+        <button 
+          className={`px-4 py-2 rounded-lg ${currentPage === 1 ? 'bg-indigo-300 text-gray-300' : 'bg-indigo-500 text-white'}`}
+          onClick={() => paginate(currentPage - 1)} 
+          disabled={currentPage === 1}
+        >
+          Prev
+        </button>
 
         {/* Display page numbers dynamically */}
         {Array.from({ length: Math.ceil(users.length / usersPerPage) }, (_, index) => (
@@ -443,8 +443,7 @@ const Admin = () => {
                     </div>                
                     <button 
                       type="submit" 
-                      className="w-full bg-indigo-500 rounded-md py-2 text-white font-semibold hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 mb-1 mt-3"                   
-                                       
+                      className="w-full bg-indigo-500 rounded-md py-2 text-white font-semibold hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 mb-1 mt-3"             
                     >
                       Save
                     </button>                                      
