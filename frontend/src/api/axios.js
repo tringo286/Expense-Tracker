@@ -1,5 +1,5 @@
 import axios from 'axios';
-const BASE_URL = 'http://localhost:5000'; // Backend
+const BASE_URL = 'https://expense-tracker-fpid.onrender.com'; // Backend
 
 export default axios.create({
     baseURL: BASE_URL,
