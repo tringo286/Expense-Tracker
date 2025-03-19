@@ -1,6 +1,6 @@
 # Expense Tracker App
 
-A full-stack expense tracker app built using React, Node, Express, MongoDB, and styled with Tailwind CSS. This app helps users track their income and expenses securely, offering administrative control for managing users' data.
+A full-stack expense tracker app built using React, Node, Express, MongoDB, and styled with Tailwind CSS. This app helps users track their income and expenses securely, offering administrative control for managing users' data. 
 
 ## Features
 
@@ -89,4 +89,4 @@ Ensure you have MongoDB set up. Obtain the MongoDB connection string and add it 
 ![Admind page](./images/adminPage.png)
 
 ### 6. Deployed Website
-You can access the live version of this application at: [Expense Tracker](https://spendings-tracker-app.netlify.app)
+You can access the live version of this application at: [Expense Tracker App](https://spendings-tracker-app.netlify.app)
